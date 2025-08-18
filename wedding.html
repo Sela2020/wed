@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emily & Eselase's Wedding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        /* Splash Screen Animation */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f9f5f3;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .splash-content {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .splash-half {
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .splash-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 4s ease-out;
+        }
+        
+        .splash-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 1s forwards;
+        }
+        
+        .splash-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        
+        /* Floating animation for elements */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Heart beat animation */
+        .heart-beat {
+            animation: heartBeat 1.3s ease-in-out infinite;
+        }
+        
+        /* Confetti styles */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+        
+        /* Photo gallery animations */
+        .gallery-item {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(212, 165, 154, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Section entrance animations */
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #D4A59A;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c99387;
+        }
+        
+        /* Floating hearts background */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(212, 165, 154, 0.5);
+            animation: floating-heart linear infinite;
+        }
+        
+        @keyframes floating-heart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 overflow-x-hidden">
+    <!-- Audio Player -->
+    <audio id="weddingMusic" loop>
+        <source src="best.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control Button -->
+    <div id="musicControl" class="fixed bottom-4 right-4 z-50 bg-[#D4A59A] rounded-full p-3 shadow-lg cursor-pointer hover:bg-[#c99387] transition-colors duration-300">
+        <i id="musicIcon" class="fas fa-play text-white text-2xl"></i>
+    </div>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-half">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="splash-image" alt="Wedding couple">
+                <div class="splash-overlay"></div>
+                <div class="splash-text">
+                    <h2 class="dancing-script text-4xl md:text-6xl mb-4">Emily & Eselase</h2>
+                    <p class="text-xl">Are getting married</p>
+                </div>
+            </div>
+            <div class="splash-half">
+                <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" class="splash-image" alt="Wedding rings">
+                <div class="splash-overlay"></div>
+                <div class="splash-text">
+                    <h2 class="dancing-script text-4xl md:text-6xl mb-4">August 31, 2025</h2>
+                    <p class="text-xl">Save the date</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Background Slider -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute inset-0 bg-black/30 z-10"></div>
+        <div id="bgSlider" class="h-full w-full bg-cover bg-center transition-all duration-1000 ease-in-out" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')"></div>
+    </div>
+
+    <!-- Landing Section -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-20 relative z-10">
+        <div class="bg-white/90 backdrop-blur-sm rounded-lg p-8 max-w-md w-full shadow-lg transform transition-all duration-500 hover:shadow-xl section-hidden">
+            <div class="heart-beat mb-4">
+                <i class="fas fa-heart text-4xl text-[#D4A59A]"></i>
+            </div>
+            <h1 class="dancing-script text-5xl md:text-6xl font-bold text-[#D4A59A] mb-2">Emily & Eselase</h1>
+            <p class="text-lg text-gray-600 mb-6">Are getting married</p>
+            
+            <div class="border-t border-b border-[#D4A59A]/30 py-4 my-4 transform transition-all duration-300 hover:scale-105">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-1">You're officially invited</p>
+                <p class="dancing-script text-3xl text-[#D4A59A] font-bold">August 31, 2025</p>
+            </div>
+            
+            <div class="mt-6">
+                <div id="countdown" class="flex justify-center gap-2">
+                    <!-- Countdown will be inserted here by JavaScript -->
+                </div>
+            </div>
+            
+            <a href="#ceremonies" class="mt-8 inline-block bg-[#D4A59A] hover:bg-[#c99387] text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md floating">
+                View Details
+            </a>
+        </div>
+        
+        <!-- Floating decorative elements -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-2xl text-[#D4A59A]"></i>
+        </div>
+    </section>
+
+    <!-- Ceremonies Section -->
+    <section id="ceremonies" class="py-16 px-6 bg-white/90 backdrop-blur-sm relative z-10 section-hidden">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Ceremonies</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto mb-3 transform transition-all duration-300 hover:rotate-12">
+                            <i class="fas fa-ring text-white text-2xl"></i>
+                        </div>
+                        <h3 class="dancing-script text-2xl text-[#D4A59A]">Traditional Ceremony</h3>
+                    </div>
+                    <div class="space-y-3 text-center">
+                        <p class="flex items-center justify-center gap-2">
+                            <i class="fas fa-calendar-day text-[#D4A59A]"></i>
+                            <span>August 31, 2025</span>
+                        </p>
+                        <p class="flex items-center justify-center gap-2">
+                            <i class="fas fa-clock text-[#D4A59A]"></i>
+                            <span>4:00 PM</span>
+                        </p>
+                        <p class="flex items-center justify-center gap-2">
+                            <i class="fas fa-map-marker-alt text-[#D4A59A]"></i>
+                            <span>St. Mary's Cathedral, 123 Church St</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto mb-3 transform transition-all duration-300 hover:rotate-12">
+                            <i class="fas fa-heart text-white text-2xl"></i>
+                        </div>
+                        <h3 class="dancing-script text-2xl text-[#D4A59A]">Matrimonial Ceremony</h3>
+                    </div>
+                    <div class="space-y-3 text-center">
+                        <p class="flex items-center justify-center gap-2">
+                            <i class="fas fa-calendar-day text-[#D4A59A]"></i>
+                            <span>August 31, 2025</span>
+                        </p>
+                        <p class="flex items-center justify-center gap-2">
+                            <i class="fas fa-clock text-[#D4A59A]"></i>
+                            <span>2:00 PM</span>
+                        </p>
+                        <p class="flex items-center justify-center gap-2">
+                            <i class="fas fa-map-marker-alt text-[#D4A59A]"></i>
+                            <span>The Grand Ballroom, 456 Park Ave</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Our Story -->
+    <section class="py-16 px-6 bg-[#f9f5f3] relative z-10 section-hidden">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Story</h2>
+            
+            <div class="space-y-12">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="md:w-1/2">
+                        <div class="bg-white p-6 rounded-lg shadow-md h-full transform transition-all duration-500 hover:-translate-y-2">
+                            <h3 class="dancing-script text-2xl text-[#D4A59A] mb-4">How We Met</h3>
+                            <p class="text-gray-700">It was a rainy afternoon in the fall of 2018 when we both reached for the same book at the local bookstore. After an awkward moment of laughter, we decided to share a coffee and the rest, as they say, is history.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 transform transition-all duration-500 hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Couple reading books" class="rounded-lg shadow-md w-full h-64 object-cover">
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
+                    <div class="md:w-1/2">
+                        <div class="bg-white p-6 rounded-lg shadow-md h-full transform transition-all duration-500 hover:-translate-y-2">
+                            <h3 class="dancing-script text-2xl text-[#D4A59A] mb-4">The Proposal</h3>
+                            <p class="text-gray-700">On a snowy winter evening, Eselase recreated our first date at the same bookstore. As I reached for a book, I found a ring instead. He got down on one knee right there between the bookshelves, and of course, I said yes!</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 transform transition-all duration-500 hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Wedding venue" class="rounded-lg shadow-md w-full h-64 object-cover">
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="md:w-1/2">
+                        <div class="bg-white p-6 rounded-lg shadow-md h-full transform transition-all duration-500 hover:-translate-y-2">
+                            <h3 class="dancing-script text-2xl text-[#D4A59A] mb-4">Our Future</h3>
+                            <p class="text-gray-700">We're excited to start this new chapter together, building a home filled with love, laughter, and of course, lots of books. We can't wait to celebrate this special day with all of you, our dear friends and family.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 transform transition-all duration-500 hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Wedding celebration" class="rounded-lg shadow-md w-full h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wedding Colors -->
+    <section class="py-16 px-6 bg-white relative z-10 section-hidden">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Wedding Colors</h2>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-8">
+                <div class="text-center transform transition-all duration-500 hover:scale-110">
+                    <div class="w-32 h-32 rounded-full bg-[#D4A59A] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
+                    <h3 class="dancing-script text-2xl text-[#D4A59A]">Blush Pink</h3>
+                    <p class="text-gray-600">#D4A59A</p>
+                </div>
+                <div class="text-center transform transition-all duration-500 hover:scale-110">
+                    <div class="w-32 h-32 rounded-full bg-[#D4AF37] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
+                    <h3 class="dancing-script text-2xl text-[#D4AF37]">Gold</h3>
+                    <p class="text-gray-600">#D4AF37</p>
+                </div>
+                <div class="text-center transform transition-all duration-500 hover:scale-110">
+                    <div class="w-32 h-32 rounded-full bg-[#f8f4f0] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12 border border-gray-200"></div>
+                    <h3 class="dancing-script text-2xl text-gray-600">Ivory</h3>
+                    <p class="text-gray-600">#f8f4f0</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Map -->
+    <section class="py-16 px-6 bg-[#f9f5f3] relative z-10 section-hidden">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Locations</h2>
+            
+            <div class="bg-white p-4 rounded-lg shadow-lg transform transition-all duration-500 hover:shadow-xl">
+                <div class="aspect-w-16 aspect-h-9 w-full h-64 md:h-96 rounded overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215373510655!2d-73.9878449242395!3d40.74844097138991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1690835426996!5m2!1sen!2sus" 
+                        class="w-full h-full" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-lg border border-[#D4A59A]/20 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                        <h3 class="font-bold text-lg text-[#D4A59A] mb-2">Traditional Ceremony</h3>
+                        <p class="text-gray-700">St. Mary's Cathedral</p>
+                        <p class="text-gray-700">123 Church Street</p>
+                        <p class="text-gray-700">New York, NY 10001</p>
+                        <a href="#" class="mt-2 inline-block text-[#D4A59A] hover:underline">Get Directions</a>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-[#D4A59A]/20 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                        <h3 class="font-bold text-lg text-[#D4A59A] mb-2">Matrimonial Ceremony</h3>
+                        <p class="text-gray-700">The Grand Ballroom</p>
+                        <p class="text-gray-700">456 Park Avenue</p>
+                        <p class="text-gray-700">New York, NY 10001</p>
+                        <a href="#" class="mt-2 inline-block text-[#D4A59A] hover:underline">Get Directions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gift Section -->
+    <section class="py-16 px-6 bg-white relative z-10 section-hidden">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Gifts</h2>
+            
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl">
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto transform transition-all duration-300 hover:rotate-12">
+                        <i class="fas fa-gift text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <p class="text-center text-gray-700 mb-6">
+                    Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, a monetary contribution towards our future together would be greatly appreciated.
+                </p>
+                
+                <div class="bg-[#f9f5f3] p-4 rounded-lg transform transition-all duration-300 hover:scale-[1.01]">
+                    <h3 class="font-bold text-lg text-[#D4A59A] mb-2 text-center">Bank Details</h3>
+                    <div class="space-y-2 text-center">
+                        <p class="text-gray-700">Bank: Ecobank Bank</p>
+                        <p class="text-gray-700">Account Name: Eselase Banini</p>
+                        <p class="text-gray-700">Account Number: 30303 9834 3932 03 23</p>
+                        <p class="text-gray-700">Routing Number: 021000021</p>
+                    </div>
+                </div>
+                
+                <p class="text-center text-gray-500 text-sm mt-6">
+                    For traditional gifts, we are registered at Bed Bath & Beyond and Amazon.
+                </p>
+                
+                <div class="flex justify-center gap-4 mt-6">
+                    <a href="#" class="w-12 h-12 bg-[#D4A59A] rounded-full flex items-center justify-center text-white transform transition-all duration-300 hover:scale-110 hover:bg-[#c99387]">
+                        <i class="fab fa-amazon"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-[#D4A59A] rounded-full flex items-center justify-center text-white transform transition-all duration-300 hover:scale-110 hover:bg-[#c99387]">
+                        <i class="fas fa-store"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="py-16 px-6 bg-[#f9f5f3] relative z-10 section-hidden">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Gallery</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Couple photo 1" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Couple photo 2" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" alt="Couple photo 3" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1519657337289-077653f724ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 4" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 5" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1518134346374-184f8ec2200f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 6" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Couple photo 7" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Couple photo 8" class="w-full h-full object-cover">
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button id="viewMoreBtn" class="bg-[#D4A59A] hover:bg-[#c99387] text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md">
+                    View More Photos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section id="rsvp" class="py-16 px-6 bg-white relative z-10 section-hidden">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">RSVP</h2>
+            
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl">
+                <form id="rsvpForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name(s)</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]">
+                    </div>
+                    
+                    <div>
+                        <label for="guests" class="block text-sm font-medium text-gray-700 mb-1">Number of Guests</label>
+                        <select id="guests" name="guests" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5+</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <p class="block text-sm font-medium text-gray-700 mb-3">Will you be attending?</p>
+                        <div class="flex gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="attending" value="yes" checked class="h-4 w-4 text-[#D4A59A] focus:ring-[#D4A59A] border-gray-300">
+                                <span class="ml-2 text-gray-700">Yes, with pleasure</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="attending" value="no" class="h-4 w-4 text-[#D4A59A] focus:ring-[#D4A59A] border-gray-300">
+                                <span class="ml-2 text-gray-700">No, I can't come</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message (Optional)</label>
+                        <textarea id="message" name="message" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]"></textarea>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-[#D4A59A] hover:bg-[#c99387] text-white font-medium py-3 px-4 rounded-md transition-all duration-300 transform hover:scale-105 shadow-md">
+                            Submit RSVP
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="rsvpSuccess" class="hidden mt-6 p-4 bg-green-100 text-green-700 rounded-md text-center transform transition-all duration-500">
+                    <i class="fas fa-check-circle text-2xl mb-2 animate-bounce"></i>
+                    <p class="font-medium">Thank you for your RSVP!</p>
+                    <p>We look forward to celebrating with you.</p>
+                    <div class="mt-4">
+                        <i class="fas fa-heart text-[#D4A59A] heart-beat"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-[#333] text-white relative z-10 section-hidden">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center">
+                <h2 class="dancing-script text-3xl text-[#D4A59A] mb-4">Emily & Eselase</h2>
+                <p class="mb-6">August 31, 2025</p>
+                
+                <div class="flex justify-center gap-4 mb-6">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                
+                <p class="text-sm text-white/70 mb-2">For any questions, please contact:</p>
+                <p class="mb-6">Emily: (123) 456-7890 | Eselase: 024 533 2299</p>
+                
+                <p class="text-xs text-white/50">Made with <i class="fas fa-heart text-[#D4A59A]"></i> for our special day</p>
+                
+                <div class="mt-6">
+                    <button id="backToTop" class="text-[#D4A59A] hover:text-[#c99387] transition-colors duration-300">
+                        <i class="fas fa-chevron-up mr-2"></i> Back to Top
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Music player setup
+    const music = document.getElementById('weddingMusic');
+    const musicControl = document.getElementById('musicControl');
+    const musicIcon = document.getElementById('musicIcon');
+    let musicPlaying = false;
+    
+    // Set volume to 30%
+    music.volume = 0.3;
+    
+    // Play music function with multiple attempts
+    function playMusic() {
+        // First attempt
+        const promise = music.play();
+        
+        if (promise !== undefined) {
+            promise.catch(error => {
+                console.log('First attempt failed, trying fallback:', error);
+                
+                // Second attempt after slight delay
+                setTimeout(() => {
+                    const promise2 = music.play();
+                    if (promise2 !== undefined) {
+                        promise2.catch(error => {
+                            console.log('Second attempt failed:', error);
+                            // Show play button for manual activation
+                            musicControl.style.display = 'block';
+                        }).then(() => {
+                            // Success on second attempt
+                            musicPlaying = true;
+                            musicIcon.classList.remove('fa-play');
+                            musicIcon.classList.add('fa-pause');
+                        });
+                    }
+                }, 500);
+            }).then(() => {
+                // Success on first attempt
+                musicPlaying = true;
+                musicIcon.classList.remove('fa-play');
+                musicIcon.classList.add('fa-pause');
+            });
+        }
+    }
+    
+    // Toggle play/pause
+    function toggleMusic() {
+        if (musicPlaying) {
+            music.pause();
+            musicIcon.classList.remove('fa-pause');
+            musicIcon.classList.add('fa-play');
+        } else {
+            playMusic();
+        }
+        musicPlaying = !musicPlaying;
+    }
+    
+    // Click handler for music control
+    musicControl.addEventListener('click', toggleMusic);
+    
+    // Try to autoplay when splash screen is clicked
+    document.getElementById('splashScreen').addEventListener('click', function() {
+        playMusic();
+        // Hide the control button if autoplay succeeds
+        musicControl.style.display = 'none';
+    });
+    
+    // Try autoplay when splash screen disappears
+    setTimeout(function() {
+        playMusic();
+        // Show control button if autoplay fails
+        setTimeout(() => {
+            if (!musicPlaying) {
+                musicControl.style.display = 'block';
+            }
+        }, 1000);
+    }, 4000);
+
+
+
+
+    
+
+                // Splash Screen Animation
+            const splashScreen = document.getElementById('splashScreen');
+            const splashImages = document.querySelectorAll('.splash-image');
+            
+            // Zoom out animation for splash images
+            splashImages.forEach(img => {
+                img.style.transform = 'scale(1)';
+            });
+            
+            // Remove splash screen after 4 seconds
+            setTimeout(() => {
+                splashScreen.style.opacity = '0';
+                splashScreen.style.pointerEvents = 'none';
+                
+                // Create confetti effect
+                createConfetti();
+                
+                // Create floating hearts background
+                createFloatingHearts();
+                
+                // Remove splash screen from DOM after fade out
+                setTimeout(() => {
+                    splashScreen.remove();
+                    
+                    // Trigger section animations
+                    animateSections();
+                }, 1000);
+            }, 4000);
+        });
+        
+        // Background Slider
+        const bgImages = [
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+            "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80",
+            "https://images.unsplash.com/photo-1519657337289-077653f724ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+        ];
+        
+        let currentBgIndex = 0;
+        const bgSlider = document.getElementById('bgSlider');
+        
+        function changeBackground() {
+            currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+            bgSlider.style.opacity = 0;
+            
+            setTimeout(() => {
+                bgSlider.style.backgroundImage = `url(${bgImages[currentBgIndex]})`;
+                bgSlider.style.opacity = 1;
+            }, 1000);
+        }
+        
+        setInterval(changeBackground, 5000);
+        
+        // Countdown Timer
+        function updateCountdown() {
+            const weddingDate = new Date('August 31, 2025 14:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').innerHTML = `
+                <div class="text-center transform transition-all duration-300 hover:scale-110">
+                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${days.toString().padStart(2, '0')}</div>
+                    <div class="text-xs uppercase tracking-wider">Days</div>
+                </div>
+                <div class="text-3xl font-bold text-[#D4A59A]">:</div>
+                <div class="text-center transform transition-all duration-300 hover:scale-110">
+                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${hours.toString().padStart(2, '0')}</div>
+                    <div class="text-xs uppercase tracking-wider">Hours</div>
+                </div>
+                <div class="text-3xl font-bold text-[#D4A59A]">:</div>
+                <div class="text-center transform transition-all duration-300 hover:scale-110">
+                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${minutes.toString().padStart(2, '0')}</div>
+                    <div class="text-xs uppercase tracking-wider">Mins</div>
+                </div>
+                <div class="text-3xl font-bold text-[#D4A59A]">:</div>
+                <div class="text-center transform transition-all duration-300 hover:scale-110">
+                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${seconds.toString().padStart(2, '0')}</div>
+                    <div class="text-xs uppercase tracking-wider">Secs</div>
+                </div>
+            `;
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // RSVP Form Submission
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, you would send this data to a server
+            // For this demo, we'll just show the success message
+            this.classList.add('hidden');
+            document.getElementById('rsvpSuccess').classList.remove('hidden');
+            
+            // Create confetti effect on successful RSVP
+            createConfetti();
+            
+            // Scroll to show the success message
+            document.getElementById('rsvpSuccess').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Back to top button
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // View more photos button
+        document.getElementById('viewMoreBtn').addEventListener('click', function() {
+            alert('In a real implementation, this would show more photos or open a photo gallery!');
+            createConfetti();
+        });
+        
+        // Animate sections when they come into view
+        function animateSections() {
+            const sections = document.querySelectorAll('.section-hidden');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('section-show');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#D4A59A', '#D4AF37', '#f8f4f0', '#ffffff'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                
+                document.body.appendChild(confetti);
+                
+                const animationDuration = Math.random() * 3 + 2;
+                
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                
+                // Create keyframes for falling animation
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                    style.remove();
+                }, animationDuration * 1000);
+            }
+        }
+        
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                heart.style.animationDuration = Math.random() * 10 + 10 + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+       
+    </script>
+</body>
+</html>
