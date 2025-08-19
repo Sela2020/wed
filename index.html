@@ -210,14 +210,17 @@
                 opacity: 0;
             }
         }
+        #musicControl {
+    display: none;
+}
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
     <!-- Audio Player -->
-    <audio id="weddingMusic" loop>
-        <source src="best.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+<audio id="weddingMusic" loop autoplay muted>
+    <source src="best.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
     <!-- Music Control Button -->
     <div id="musicControl" class="fixed bottom-4 right-4 z-50 bg-[#D4A59A] rounded-full p-3 shadow-lg cursor-pointer hover:bg-[#c99387] transition-colors duration-300">
@@ -631,81 +634,76 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-    // Music player setup
-    const music = document.getElementById('weddingMusic');
-    const musicControl = document.getElementById('musicControl');
-    const musicIcon = document.getElementById('musicIcon');
-    let musicPlaying = false;
+        // Music player setup
+const music = document.getElementById('weddingMusic');
+const musicControl = document.getElementById('musicControl');
+const musicIcon = document.getElementById('musicIcon');
+let musicPlaying = false;
+
+// Set volume to 30%
+music.volume = 0.3;
+
+// Play music function with multiple attempts
+function playMusic() {
+    // First attempt
+    const promise = music.play();
     
-    // Set volume to 30%
-    music.volume = 0.3;
-    
-    // Play music function with multiple attempts
-    function playMusic() {
-        // First attempt
-        const promise = music.play();
-        
-        if (promise !== undefined) {
-            promise.catch(error => {
-                console.log('First attempt failed, trying fallback:', error);
-                
-                // Second attempt after slight delay
-                setTimeout(() => {
-                    const promise2 = music.play();
-                    if (promise2 !== undefined) {
-                        promise2.catch(error => {
-                            console.log('Second attempt failed:', error);
-                            // Show play button for manual activation
-                            musicControl.style.display = 'block';
-                        }).then(() => {
-                            // Success on second attempt
-                            musicPlaying = true;
-                            musicIcon.classList.remove('fa-play');
-                            musicIcon.classList.add('fa-pause');
-                        });
-                    }
-                }, 500);
-            }).then(() => {
-                // Success on first attempt
-                musicPlaying = true;
-                musicIcon.classList.remove('fa-play');
-                musicIcon.classList.add('fa-pause');
-            });
-        }
+    if (promise !== undefined) {
+        promise.catch(error => {
+            console.log('Autoplay prevented, showing play button:', error);
+            // Show play button for manual activation
+            musicControl.style.display = 'block';
+            
+            // Try again after user interaction
+            document.body.addEventListener('click', function bodyClick() {
+                const promise2 = music.play();
+                if (promise2 !== undefined) {
+                    promise2.then(() => {
+                        // Success on interaction
+                        musicPlaying = true;
+                        musicIcon.classList.remove('fa-play');
+                        musicIcon.classList.add('fa-pause');
+                        musicControl.style.display = 'none';
+                        document.body.removeEventListener('click', bodyClick);
+                    }).catch(error => {
+                        console.log('Still prevented:', error);
+                    });
+                }
+            }, { once: true });
+        }).then(() => {
+            // Success on first attempt
+            musicPlaying = true;
+            musicIcon.classList.remove('fa-play');
+            musicIcon.classList.add('fa-pause');
+            musicControl.style.display = 'none';
+        });
     }
-    
-    // Toggle play/pause
-    function toggleMusic() {
-        if (musicPlaying) {
-            music.pause();
-            musicIcon.classList.remove('fa-pause');
-            musicIcon.classList.add('fa-play');
-        } else {
-            playMusic();
-        }
-        musicPlaying = !musicPlaying;
+}
+
+// Toggle play/pause
+function toggleMusic() {
+    if (musicPlaying) {
+        music.pause();
+        musicIcon.classList.remove('fa-pause');
+        musicIcon.classList.add('fa-play');
+    } else {
+        playMusic();
     }
+    musicPlaying = !musicPlaying;
+}
+
+// Click handler for music control
+musicControl.addEventListener('click', toggleMusic);
+
+// Try to autoplay immediately when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    playMusic();
     
-    // Click handler for music control
-    musicControl.addEventListener('click', toggleMusic);
-    
-    // Try to autoplay when splash screen is clicked
+    // Also try when splash screen is clicked
     document.getElementById('splashScreen').addEventListener('click', function() {
         playMusic();
-        // Hide the control button if autoplay succeeds
-        musicControl.style.display = 'none';
     });
-    
-    // Try autoplay when splash screen disappears
-    setTimeout(function() {
-        playMusic();
-        // Show control button if autoplay fails
-        setTimeout(() => {
-            if (!musicPlaying) {
-                musicControl.style.display = 'block';
-            }
-        }, 1000);
-    }, 4000);
+});
 
 
 
