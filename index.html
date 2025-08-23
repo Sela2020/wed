@@ -3,20 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emily & Eselase's Wedding</title>
+    <title>Asabed & Nancy's Wedding</title>
+    <link href="img3.jpg" rel="icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel&family=Quicksand&display=swap');
+        
         body {
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
+        
         .dancing-script {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Cinzel', cursive;
+        }
+        
+        /* Mobile-first responsive adjustments */
+        @media (max-width: 768px) {
+            .container-padding {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .section-padding {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            
+            .text-responsive {
+                font-size: 0.9rem;
+            }
+            
+            .heading-responsive {
+                font-size: 1.8rem;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+            
+            .gallery-grid {
+                gap: 0.5rem;
+            }
+            
+            .gallery-item {
+                height: 120px;
+            }
+            
+            .bank-details p {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .container-padding {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            
+            .section-padding {
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+            
+            .heading-responsive {
+                font-size: 1.6rem;
+            }
+            
+            .countdown-number {
+                font-size: 1.3rem;
+            }
+            
+            .gallery-item {
+                height: 100px;
+            }
+            
+            .bank-details p {
+                font-size: 0.8rem;
+            }
+            
+            .bank-tab-btn {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        /* Wedding colors in row on mobile */
+        @media (max-width: 640px) {
+            .colors-container {
+                flex-direction: row;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .color-item {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .color-item h3 {
+                font-size: 0.9rem;
+            }
         }
         
         /* Splash Screen Animation */
@@ -52,7 +144,7 @@
             height: 100%;
             object-fit: cover;
             transform: scale(1.1);
-            transition: transform 4s ease-out;
+            transition: transform 5s ease-out;
         }
         
         .splash-text {
@@ -66,6 +158,7 @@
             width: 100%;
             opacity: 0;
             animation: fadeIn 2s ease-in-out 1s forwards;
+            text-shadow: 3px 2px 1px black;
         }
         
         .splash-overlay {
@@ -127,6 +220,7 @@
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
         
         .gallery-item::after {
@@ -210,39 +304,222 @@
                 opacity: 0;
             }
         }
-        #musicControl {
-    display: none;
-}
+        
+        /* Bank Tabs Styling */
+        .bank-tab-btn {
+            padding: 8px 16px;
+            background-color: #e8d5cf;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            color: #7a6159;
+        }
+        
+        .bank-tab-btn:hover {
+            background-color: #D4A59A;
+            color: white;
+        }
+        
+        .bank-tab-btn.active {
+            background-color: #D4A59A;
+            color: white;
+        }
+        
+        .bank-details {
+            text-align: left;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            margin-top: 15px;
+            position: relative;
+        }  
+        
+        .bank-details i {
+            min-width: 25px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        
+        .bank-details p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-left: 10px;
+            word-break: break-word;
+        }
+        
+        .copy-btn {
+            background: #D4A59A;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+        }
+        
+        .copy-btn:hover {
+            background: #c99387;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Image Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: #D4A59A;
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 16px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            user-select: none;
+        }
+        
+        .modal-nav.prev {
+            left: 20px;
+        }
+        
+        .modal-nav.next {
+            right: 20px;
+        }
+        
+        /* RSVP Form Toggle */
+        .rsvp-toggle {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .rsvp-toggle:hover {
+            transform: translateY(3px);
+        }
+        
+        .rsvp-form {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .rsvp-form.open {
+            max-height: 1000px;
+        }
+        
+        /* Map iframe styling */
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .map-container iframe {
+            border: 0;
+            filter: grayscale(30%) contrast(90%);
+        }
+        
+        /* Mobile touch improvements */
+        @media (hover: none) {
+            .gallery-item:hover::after {
+                opacity: 0;
+            }
+            
+            .gallery-item:hover img {
+                transform: scale(1);
+            }
+        }
+        #musicControl{
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
     <!-- Audio Player -->
-<audio id="weddingMusic" loop autoplay muted>
-    <source src="best.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
+    <audio id="weddingMusic" loop>
+        <source src="best.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <!-- Music Control Button -->
     <div id="musicControl" class="fixed bottom-4 right-4 z-50 bg-[#D4A59A] rounded-full p-3 shadow-lg cursor-pointer hover:bg-[#c99387] transition-colors duration-300">
-        <i id="musicIcon" class="fas fa-play text-white text-2xl"></i>
+        <i id="musicIcon" class="fas fa-volume-mute text-white text-2xl"></i>
     </div>
+    
     <!-- Splash Screen -->
     <div class="splash-screen" id="splashScreen">
         <div class="splash-content">
             <div class="splash-half">
-                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="splash-image" alt="Wedding couple">
+                <img src="img5.jpg" class="splash-image" alt="Wedding couple">
                 <div class="splash-overlay"></div>
                 <div class="splash-text">
-                    <h2 class="dancing-script text-4xl md:text-6xl mb-4">Emily & Eselase</h2>
-                    <p class="text-xl">Are getting married</p>
+                    <h2 class="dancing-script text-4xl md:text-6xl mb-4">Asabed <br>&<br> Nancy</h2>
+                    <p class="text-xl">Are Getting Married</p>
                 </div>
             </div>
             <div class="splash-half">
                 <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" class="splash-image" alt="Wedding rings">
                 <div class="splash-overlay"></div>
                 <div class="splash-text">
-                    <h2 class="dancing-script text-4xl md:text-6xl mb-4">August 31, 2025</h2>
-                    <p class="text-xl">Save the date</p>
+                    <h2 class="dancing-script text-4xl md:text-6xl mb-4">September 20, 2025</h2>
+                    <p class="text-xl">Save The Date</p>
                 </div>
             </div>
         </div>
@@ -254,21 +531,21 @@
     <!-- Background Slider -->
     <div class="fixed inset-0 -z-10 overflow-hidden">
         <div class="absolute inset-0 bg-black/30 z-10"></div>
-        <div id="bgSlider" class="h-full w-full bg-cover bg-center transition-all duration-1000 ease-in-out" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')"></div>
+        <div id="bgSlider" class="h-full w-full bg-cover bg-center transition-all duration-1000 ease-in-out" style="background-image: url('img1.jpg')"></div>
     </div>
 
     <!-- Landing Section -->
-    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-20 relative z-10">
-        <div class="bg-white/90 backdrop-blur-sm rounded-lg p-8 max-w-md w-full shadow-lg transform transition-all duration-500 hover:shadow-xl section-hidden">
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 py-16 relative z-10 container-padding">
+        <div class="bg-white/90 backdrop-blur-sm rounded-lg p-6 max-w-md w-full shadow-lg transform transition-all duration-500 hover:shadow-xl section-hidden">
             <div class="heart-beat mb-4">
                 <i class="fas fa-heart text-4xl text-[#D4A59A]"></i>
             </div>
-            <h1 class="dancing-script text-5xl md:text-6xl font-bold text-[#D4A59A] mb-2">Emily & Eselase</h1>
+            <h1 class="dancing-script text-4xl md:text-6xl font-bold text-[#D4A59A] mb-2">Asabed<br> & <br>Nancy</h1>
             <p class="text-lg text-gray-600 mb-6">Are getting married</p>
             
             <div class="border-t border-b border-[#D4A59A]/30 py-4 my-4 transform transition-all duration-300 hover:scale-105">
                 <p class="text-sm uppercase tracking-widest text-gray-500 mb-1">You're officially invited</p>
-                <p class="dancing-script text-3xl text-[#D4A59A] font-bold">August 31, 2025</p>
+                <p class="dancing-script text-3xl text-[#D4A59A] font-bold">September 20, 2025</p>
             </div>
             
             <div class="mt-6">
@@ -289,55 +566,30 @@
     </section>
 
     <!-- Ceremonies Section -->
-    <section id="ceremonies" class="py-16 px-6 bg-white/90 backdrop-blur-sm relative z-10 section-hidden">
+    <section id="ceremonies" class="py-12 px-4 bg-white/90 backdrop-blur-sm relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-4xl mx-auto">
-            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Ceremonies</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
-                    <div class="text-center mb-4">
-                        <div class="w-16 h-16 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto mb-3 transform transition-all duration-300 hover:rotate-12">
-                            <i class="fas fa-ring text-white text-2xl"></i>
-                        </div>
-                        <h3 class="dancing-script text-2xl text-[#D4A59A]">Traditional Ceremony</h3>
-                    </div>
-                    <div class="space-y-3 text-center">
-                        <p class="flex items-center justify-center gap-2">
-                            <i class="fas fa-calendar-day text-[#D4A59A]"></i>
-                            <span>August 31, 2025</span>
-                        </p>
-                        <p class="flex items-center justify-center gap-2">
-                            <i class="fas fa-clock text-[#D4A59A]"></i>
-                            <span>4:00 PM</span>
-                        </p>
-                        <p class="flex items-center justify-center gap-2">
-                            <i class="fas fa-map-marker-alt text-[#D4A59A]"></i>
-                            <span>St. Mary's Cathedral, 123 Church St</span>
-                        </p>
-                    </div>
-                </div>
+            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4A59A] mb-8 heading-responsive">Our Ceremonies</h2>
                 
-                <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
-                    <div class="text-center mb-4">
-                        <div class="w-16 h-16 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto mb-3 transform transition-all duration-300 hover:rotate-12">
-                            <i class="fas fa-heart text-white text-2xl"></i>
-                        </div>
-                        <h3 class="dancing-script text-2xl text-[#D4A59A]">Matrimonial Ceremony</h3>
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto mb-3 transform transition-all duration-300 hover:rotate-12">
+                        <i class="fas fa-heart text-white text-2xl"></i>
                     </div>
-                    <div class="space-y-3 text-center">
-                        <p class="flex items-center justify-center gap-2">
-                            <i class="fas fa-calendar-day text-[#D4A59A]"></i>
-                            <span>August 31, 2025</span>
-                        </p>
-                        <p class="flex items-center justify-center gap-2">
-                            <i class="fas fa-clock text-[#D4A59A]"></i>
-                            <span>2:00 PM</span>
-                        </p>
-                        <p class="flex items-center justify-center gap-2">
-                            <i class="fas fa-map-marker-alt text-[#D4A59A]"></i>
-                            <span>The Grand Ballroom, 456 Park Ave</span>
-                        </p>
-                    </div>
+                    <h3 class="dancing-script text-2xl text-[#D4A59A]">Matrimonial Ceremony</h3>
+                </div>
+                <div class="space-y-3 text-center text-responsive">
+                    <p class="flex items-center justify-center gap-2">
+                        <i class="fas fa-calendar-day text-[#D4A59A]"></i>
+                        <span>September 20, 2025</span>
+                    </p>
+                    <p class="flex items-center justify-center gap-2">
+                        <i class="fas fa-clock text-[#D4A59A]"></i>
+                        <span>10:00 PM</span>
+                    </p>
+                    <p class="flex items-center justify-center gap-2">
+                        <i class="fas fa-map-marker-alt text-[#D4A59A]"></i>
+                        <span>Presbyterian Church of Ghana<br>Ramseyer Memorial Congregation<br> Adum - Kumasi</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -345,44 +597,50 @@
     
 
     <!-- Our Story -->
-    <section class="py-16 px-6 bg-[#f9f5f3] relative z-10 section-hidden">
+    <section class="py-12 px-4 bg-[#f9f5f3] relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-4xl mx-auto">
-            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Story</h2>
+            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4A59A] mb-8 heading-responsive">Our Story</h2>
             
-            <div class="space-y-12">
-                <div class="flex flex-col md:flex-row gap-8 items-center">
+            <div class="space-y-8">
+                <div class="flex flex-col md:flex-row gap-6 items-center">
                     <div class="md:w-1/2">
                         <div class="bg-white p-6 rounded-lg shadow-md h-full transform transition-all duration-500 hover:-translate-y-2">
                             <h3 class="dancing-script text-2xl text-[#D4A59A] mb-4">How We Met</h3>
-                            <p class="text-gray-700">It was a rainy afternoon in the fall of 2018 when we both reached for the same book at the local bookstore. After an awkward moment of laughter, we decided to share a coffee and the rest, as they say, is history.</p>
+                            <p class="text-gray-700 text-responsive">Our love story began in the most unexpected way. As teenagers, we first crossed paths at a music conference in Asante Akyem Agogo. We noticed each other, but at that time, we were far from imagining what the future held—one of us even tried to avoid the other! With no numbers exchanged, life took us back on separate paths.
+
+But destiny had other plans. A few months later, we met again at a youth retreat. This time, something felt different. We shared numbers, conversations began, and slowly a friendship started to grow.
+
+Then came that unforgettable day—January 1st, at the Manhyia Palace during a church program. The moment our eyes met, a spark lit between us, one that neither of us could ignore. What began as a chance encounter had blossomed into the beginning of a love that would carry us through the years.
+
+From that day forward, our journey truly began—a journey filled with laughter, growth, faith, and love. And now, we stand on the edge of forever, ready to continue walking hand in hand into a lifetime together.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2 transform transition-all duration-500 hover:scale-105">
-                        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Couple reading books" class="rounded-lg shadow-md w-full h-64 object-cover">
+                        <img src="img4.jpg" alt="Couple reading books" class="rounded-lg shadow-md w-full h-64 object-cover">
                     </div>
                 </div>
                 
-                <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-center">
                     <div class="md:w-1/2">
                         <div class="bg-white p-6 rounded-lg shadow-md h-full transform transition-all duration-500 hover:-translate-y-2">
                             <h3 class="dancing-script text-2xl text-[#D4A59A] mb-4">The Proposal</h3>
-                            <p class="text-gray-700">On a snowy winter evening, Eselase recreated our first date at the same bookstore. As I reached for a book, I found a ring instead. He got down on one knee right there between the bookshelves, and of course, I said yes!</p>
+                            <p class="text-gray-700 text-responsive">On a snowy winter evening, Eselase recreated our first date at the same bookstore. As I reached for a book, I found a ring instead. He got down on one knee right there between the bookshelves, and of course, I said yes!</p>
                         </div>
                     </div>
                     <div class="md:w-1/2 transform transition-all duration-500 hover:scale-105">
-                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Wedding venue" class="rounded-lg shadow-md w-full h-64 object-cover">
+                        <img src="img2.jpg" alt="Wedding venue" class="rounded-lg shadow-md w-full h-64 object-cover">
                     </div>
                 </div>
                 
-                <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex flex-col md:flex-row gap-6 items-center">
                     <div class="md:w-1/2">
                         <div class="bg-white p-6 rounded-lg shadow-md h-full transform transition-all duration-500 hover:-translate-y-2">
                             <h3 class="dancing-script text-2xl text-[#D4A59A] mb-4">Our Future</h3>
-                            <p class="text-gray-700">We're excited to start this new chapter together, building a home filled with love, laughter, and of course, lots of books. We can't wait to celebrate this special day with all of you, our dear friends and family.</p>
+                            <p class="text-gray-700 text-responsive">We're excited to start this new chapter together, building a home filled with love, laughter, and of course, lots of books. We can't wait to celebrate this special day with all of you, our dear friends and family.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2 transform transition-all duration-500 hover:scale-105">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Wedding celebration" class="rounded-lg shadow-md w-full h-64 object-cover">
+                        <img src="img3.jpg" alt="Wedding celebration" class="rounded-lg shadow-md w-full h-64 object-cover">
                     </div>
                 </div>
             </div>
@@ -390,39 +648,39 @@
     </section>
 
     <!-- Wedding Colors -->
-    <section class="py-16 px-6 bg-white relative z-10 section-hidden">
+    <section class="py-12 px-4 bg-white relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-4xl mx-auto">
-            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Wedding Colors</h2>
+            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4A59A] mb-8 heading-responsive">Our Wedding Colors</h2>
             
-            <div class="flex flex-col md:flex-row justify-center gap-8">
-                <div class="text-center transform transition-all duration-500 hover:scale-110">
-                    <div class="w-32 h-32 rounded-full bg-[#D4A59A] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
-                    <h3 class="dancing-script text-2xl text-[#D4A59A]">Blush Pink</h3>
-                    <p class="text-gray-600">#D4A59A</p>
+            <div class="flex flex-col md:flex-row justify-center gap-6 colors-container">
+                <div class="text-center transform transition-all duration-500 hover:scale-110 color-item">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#D4A59A] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
+                    <h3 class="dancing-script text-xl md:text-2xl text-[#D4A59A]">Blush Pink</h3>
+                    <p class="text-gray-600 text-responsive">#D4A59A</p>
                 </div>
-                <div class="text-center transform transition-all duration-500 hover:scale-110">
-                    <div class="w-32 h-32 rounded-full bg-[#D4AF37] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
-                    <h3 class="dancing-script text-2xl text-[#D4AF37]">Gold</h3>
-                    <p class="text-gray-600">#D4AF37</p>
+                <div class="text-center transform transition-all duration-500 hover:scale-110 color-item">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#D4AF37] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
+                    <h3 class="dancing-script text-xl md:text-2xl text-[#D4AF37]">Gold</h3>
+                    <p class="text-gray-600 text-responsive">#D4AF37</p>
                 </div>
-                <div class="text-center transform transition-all duration-500 hover:scale-110">
-                    <div class="w-32 h-32 rounded-full bg-[#f8f4f0] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12 border border-gray-200"></div>
-                    <h3 class="dancing-script text-2xl text-gray-600">Ivory</h3>
-                    <p class="text-gray-600">#f8f4f0</p>
+                <div class="text-center transform transition-all duration-500 hover:scale-110 color-item">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#f8f4f0] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12 border border-gray-200"></div>
+                    <h3 class="dancing-script text-xl md:text-2xl text-gray-600">Ivory</h3>
+                    <p class="text-gray-600 text-responsive">#f8f4f0</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Location Map -->
-    <section class="py-16 px-6 bg-[#f9f5f3] relative z-10 section-hidden">
+    <section class="py-12 px-4 bg-[#f9f5f3] relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-4xl mx-auto">
-            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Locations</h2>
+            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4A59A] mb-8 heading-responsive">Locations</h2>
             
             <div class="bg-white p-4 rounded-lg shadow-lg transform transition-all duration-500 hover:shadow-xl">
-                <div class="aspect-w-16 aspect-h-9 w-full h-64 md:h-96 rounded overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+                <div class="map-container w-full h-64 md:h-96 rounded overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215373510655!2d-73.9878449242395!3d40.74844097138991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1690835426996!5m2!1sen!2sus" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.6562410436236!2d-1.6232989250056287!3d6.689432393305946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb96ec3edcf8a9%3A0x900f8498763a0806!2sPresbyterian%20Church%20of%20Ghana%2C%20Ramseyer%20Memorial%20Congregation!5e0!3m2!1sen!2sgh!4v1755976973944!5m2!1sen!2sgh" 
                         class="w-full h-full" 
                         style="border:0;" 
                         allowfullscreen="" 
@@ -433,18 +691,11 @@
                 
                 <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-white p-4 rounded-lg border border-[#D4A59A]/20 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                        <h3 class="font-bold text-lg text-[#D4A59A] mb-2">Traditional Ceremony</h3>
-                        <p class="text-gray-700">St. Mary's Cathedral</p>
-                        <p class="text-gray-700">123 Church Street</p>
-                        <p class="text-gray-700">New York, NY 10001</p>
-                        <a href="#" class="mt-2 inline-block text-[#D4A59A] hover:underline">Get Directions</a>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg border border-[#D4A59A]/20 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                         <h3 class="font-bold text-lg text-[#D4A59A] mb-2">Matrimonial Ceremony</h3>
-                        <p class="text-gray-700">The Grand Ballroom</p>
-                        <p class="text-gray-700">456 Park Avenue</p>
-                        <p class="text-gray-700">New York, NY 10001</p>
-                        <a href="#" class="mt-2 inline-block text-[#D4A59A] hover:underline">Get Directions</a>
+                        <p class="text-gray-700 text-responsive">Presbyterian Church of Ghana</p>
+                        <p class="text-gray-700 text-responsive">Ramseyer Memorial Congregation</p>
+                        <p class="text-gray-700 text-responsive">Adum - Kumasi</p>
+                        <a href="https://www.google.com/maps/dir//Presbyterian+Church+of+Ghana,+Ramseyer+Memorial+Congregation,+21+Ankobea+Street,+Kumasi/@6.6894324,-1.6232989,17z/data=!4m9!4m8!1m0!1m5!1m1!1s0xfdb96ec3edcf8a9:0x900f8498763a0806!2m2!1d-1.620724!2d6.6894324!3e0?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D" class="mt-2 inline-block text-[#D4A59A] hover:underline text-responsive">Get Directions</a>
                     </div>
                 </div>
             </div>
@@ -452,40 +703,101 @@
     </section>
 
     <!-- Gift Section -->
-    <section class="py-16 px-6 bg-white relative z-10 section-hidden">
+    <section class="py-12 px-4 bg-white relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-4xl mx-auto">
-            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Gifts</h2>
+            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4A59A] mb-8 heading-responsive">Gifts</h2>
             
             <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl">
                 <div class="text-center mb-6">
-                    <div class="w-20 h-20 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto transform transition-all duration-300 hover:rotate-12">
-                        <i class="fas fa-gift text-white text-3xl"></i>
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto transform transition-all duration-300 hover:rotate-12">
+                        <i class="fas fa-gift text-white text-2xl md:text-3xl"></i>
                     </div>
                 </div>
                 
-                <p class="text-center text-gray-700 mb-6">
+                <p class="text-center text-gray-700 mb-6 text-responsive">
                     Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, a monetary contribution towards our future together would be greatly appreciated.
                 </p>
                 
-                <div class="bg-[#f9f5f3] p-4 rounded-lg transform transition-all duration-300 hover:scale-[1.01]">
-                    <h3 class="font-bold text-lg text-[#D4A59A] mb-2 text-center">Bank Details</h3>
-                    <div class="space-y-2 text-center">
-                        <p class="text-gray-700">Bank: Ecobank Bank</p>
-                        <p class="text-gray-700">Account Name: Eselase Banini</p>
-                        <p class="text-gray-700">Account Number: 30303 9834 3932 03 23</p>
-                        <p class="text-gray-700">Routing Number: 021000021</p>
+                <!-- Bank Options Tabs -->
+                <div class="bg-[#f9f5f3] p-4 rounded-lg">
+                    <h3 class="font-bold text-lg text-[#D4A59A] mb-4 text-center">Bank Transfer Options</h3>
+                    
+                    <div class="flex flex-wrap justify-center gap-2 mb-4">
+                        <button class="bank-tab-btn active" data-bank="fidelity">Fidelity Bank</button>
+                        <button class="bank-tab-btn" data-bank="gt">GT Bank</button>
+                        <button class="bank-tab-btn" data-bank="halifax">Halifax (UK)</button>
+                        <button class="bank-tab-btn" data-bank="lloyds">Lloyds Bank (UK)</button>
+                    </div>
+                    
+                    <!-- Bank Details Containers -->
+                    <!-- Fidelity Bank Details -->
+                    <div class="bank-details active" id="fidelity-details">
+                        <div class="relative">
+                            <p><i class="fas fa-university text-[#D4A59A]"></i> <span class="font-medium">Bank Name:</span> Fidelity Bank</p>
+                            <p><i class="fas fa-code-branch text-[#D4A59A]"></i> <span class="font-medium">Branch:</span> Adum</p>
+                            <p><i class="fas fa-user text-[#D4A59A]"></i> <span class="font-medium">Account Name:</span> Adarkwa Jnr Asare-Bediako</p>
+                            <p><i class="fas fa-hashtag text-[#D4A59A]"></i> <span class="font-medium">Account Number:</span> 2030516664014</p>
+                            <button class="copy-btn" data-copy="fidelity">
+                                <i class="fas fa-copy"></i> Copy Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- GT Bank Details -->
+                    <div class="bank-details hidden" id="gt-details">
+                        <div class="relative">
+                            <p><i class="fas fa-university text-[#D4A59A]"></i> <span class="font-medium">Bank Name:</span> GT Bank</p>
+                            <p><i class="fas fa-user text-[#D4A59A]"></i> <span class="font-medium">Account Name:</span> Nancy Nyarko Boye Mensah</p>
+                            <p><i class="fas fa-hashtag text-[#D4A59A]"></i> <span class="font-medium">Account Number:</span> 3011140191700</p>
+                            <button class="copy-btn" data-copy="gt">
+                                <i class="fas fa-copy"></i> Copy Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Halifax Bank Details -->
+                    <div class="bank-details hidden" id="halifax-details">
+                        <div class="relative">
+                            <p><i class="fas fa-university text-[#D4A59A]"></i> <span class="font-medium">Bank Name:</span> Halifax (UK)</p>
+                            <p><i class="fas fa-user text-[#D4A59A]"></i> <span class="font-medium">Account Name:</span> Nancy Boye Mensah</p>
+                            <p><i class="fas fa-hashtag text-[#D4A59A]"></i> <span class="font-medium">Account Number:</span> 14019164</p>
+                            <p><i class="fas fa-sort-numeric-down text-[#D4A59A]"></i> <span class="font-medium">Sort Code:</span> 11-07-69</p>
+                            <p class="mt-4 text-sm text-gray-600"><i class="fas fa-globe text-[#D4A59A]"></i> For international Transfer outside UK</p>
+                            <p><i class="fas fa-passport text-[#D4A59A]"></i> <span class="font-medium">IBAN:</span> GB02HLFX11076914019164</p>
+                            <p><i class="fas fa-code text-[#D4A59A]"></i> <span class="font-medium">BIC/SWIFT:</span> HLFXGB21V02</p>
+                            <button class="copy-btn" data-copy="halifax">
+                                <i class="fas fa-copy"></i> Copy Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lloyds Bank Details -->
+                    <div class="bank-details hidden" id="lloyds-details">
+                        <div class="relative">
+                            <p><i class="fas fa-university text-[#D4A59A]"></i> <span class="font-medium">Bank Name:</span> Lloyds Bank (UK)</p>
+                            <p><i class="fas fa-code-branch text-[#D4A59A]"></i> <span class="font-medium">Branch:</span> Adum</p>
+                            <p><i class="fas fa-user text-[#D4A59A]"></i> <span class="font-medium">Account Name:</span> Adarkwa Asare-Bediako</p>
+                            <p><i class="fas fa-hashtag text-[#D4A59A]"></i> <span class="font-medium">Account Number:</span> 12785268</p>
+                            <p><i class="fas fa-sort-numeric-down text-[#D4A59A]"></i> <span class="font-medium">Sort Code:</span> 77-65-14</p>
+                            <p class="mt-4 text-sm text-gray-600"><i class="fas fa-globe text-[#D4A59A]"></i> For international Transfer outside UK</p>
+                            <p><i class="fas fa-passport text-[#D4A59A]"></i> <span class="font-medium">IBAN:</span> GB57LOYD77651412785268</p>
+                            <p><i class="fas fa-code text-[#D4A59A]"></i> <span class="font-medium">BIC/SWIFT:</span> LOYDGB21C03</p>
+                            <button class="copy-btn" data-copy="lloyds">
+                                <i class="fas fa-copy"></i> Copy Details
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
-                <p class="text-center text-gray-500 text-sm mt-6">
+                <p class="text-center text-gray-500 text-sm mt-6 text-responsive">
                     For traditional gifts, we are registered at Bed Bath & Beyond and Amazon.
                 </p>
                 
                 <div class="flex justify-center gap-4 mt-6">
-                    <a href="#" class="w-12 h-12 bg-[#D4A59A] rounded-full flex items-center justify-center text-white transform transition-all duration-300 hover:scale-110 hover:bg-[#c99387]">
+                    <a href="#" class="w-10 h-10 md:w-12 md:h-12 bg-[#D4A59A] rounded-full flex items-center justify-center text-white transform transition-all duration-300 hover:scale-110 hover:bg-[#c99387]">
                         <i class="fab fa-amazon"></i>
                     </a>
-                    <a href="#" class="w-12 h-12 bg-[#D4A59A] rounded-full flex items-center justify-center text-white transform transition-all duration-300 hover:scale-110 hover:bg-[#c99387]">
+                    <a href="#" class="w-10 h-10 md:w-12 md:h-12 bg-[#D4A59A] rounded-full flex items-center justify-center text-white transform transition-all duration-300 hover:scale-110 hover:bg-[#c99387]">
                         <i class="fas fa-store"></i>
                     </a>
                 </div>
@@ -494,34 +806,34 @@
     </section>
 
     <!-- Photo Gallery -->
-    <section class="py-16 px-6 bg-[#f9f5f3] relative z-10 section-hidden">
+    <section class="py-12 px-4 bg-[#f9f5f3] relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-6xl mx-auto">
-            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">Our Gallery</h2>
+            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4A59A] mb-8 heading-responsive">Our Gallery</h2>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Couple photo 1" class="w-full h-full object-cover">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 gallery-grid">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="0">
+                    <img src="img1.jpg" alt="Couple photo 1" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Couple photo 2" class="w-full h-full object-cover">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="1">
+                    <img src="img2.jpg" alt="Couple photo 2" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" alt="Couple photo 3" class="w-full h-full object-cover">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="2">
+                    <img src="img3.jpg" alt="Couple photo 3" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1519657337289-077653f724ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 4" class="w-full h-full object-cover">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="3">
+                    <img src="img4.jpg" alt="Couple photo 4" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 5" class="w-full h-full object-cover">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="4">
+                    <img src="img5.jpg" alt="Couple photo 5" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1518134346374-184f8ec2200f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 6" class="w-full h-full object-cover">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="5">
+                    <img src="" alt="Couple photo 6" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Couple photo 7" class="w-full h-full object-cover">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="6">
+                    <img src="" alt="Couple photo 7" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-48 md:h-64">
-                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Couple photo 8" class="w-full h-full object-cover">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="7">
+                    <img src="" alt="Couple photo 8" class="w-full h-full object-cover">
                 </div>
             </div>
             
@@ -533,26 +845,49 @@
         </div>
     </section>
 
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <span class="modal-nav prev">&lt;</span>
+        <span class="modal-nav next">&gt;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
     <!-- RSVP Section -->
-    <section id="rsvp" class="py-16 px-6 bg-white relative z-10 section-hidden">
+    <section id="rsvp" class="py-12 px-4 bg-white relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-2xl mx-auto">
-            <h2 class="dancing-script text-4xl text-center text-[#D4A59A] mb-12">RSVP</h2>
+            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4A59A] mb-8 heading-responsive">RSVP</h2>
             
             <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4A59A]/20 transform transition-all duration-500 hover:shadow-xl">
-                <form id="rsvpForm" class="space-y-6">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-[#D4A59A] rounded-full flex items-center justify-center mx-auto mb-4 transform transition-all duration-300 hover:rotate-12">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="dancing-script text-2xl text-[#D4A59A]">Will you join us?</h3>
+                    <p class="text-gray-600 mt-2 text-responsive">Let us know if you can make it to our special day</p>
+                </div>
+                
+                <div class="rsvp-toggle text-center mb-6" id="rsvpToggle">
+                    <div class="inline-flex items-center justify-center bg-[#D4A59A] text-white rounded-full px-6 py-3 shadow-md hover:bg-[#c99387] transition-all duration-300">
+                        <span class="mr-2">RSVP Now</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                
+                <form id="rsvpForm" class="space-y-6 rsvp-form">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name(s)</label>
-                        <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]">
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A] text-responsive">
                     </div>
                     
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]">
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A] text-responsive">
                     </div>
                     
                     <div>
                         <label for="guests" class="block text-sm font-medium text-gray-700 mb-1">Number of Guests</label>
-                        <select id="guests" name="guests" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]">
+                        <select id="guests" name="guests" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A] text-responsive">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -563,21 +898,21 @@
                     
                     <div>
                         <p class="block text-sm font-medium text-gray-700 mb-3">Will you be attending?</p>
-                        <div class="flex gap-4">
+                        <div class="flex flex-col md:flex-row gap-4">
                             <label class="inline-flex items-center">
                                 <input type="radio" name="attending" value="yes" checked class="h-4 w-4 text-[#D4A59A] focus:ring-[#D4A59A] border-gray-300">
-                                <span class="ml-2 text-gray-700">Yes, with pleasure</span>
+                                <span class="ml-2 text-gray-700 text-responsive">Yes, with pleasure</span>
                             </label>
                             <label class="inline-flex items-center">
                                 <input type="radio" name="attending" value="no" class="h-4 w-4 text-[#D4A59A] focus:ring-[#D4A59A] border-gray-300">
-                                <span class="ml-2 text-gray-700">No, I can't come</span>
+                                <span class="ml-2 text-gray-700 text-responsive">No, I can't come</span>
                             </label>
                         </div>
                     </div>
                     
                     <div>
                         <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message (Optional)</label>
-                        <textarea id="message" name="message" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A]"></textarea>
+                        <textarea id="message" name="message" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4A59A] transition-all duration-300 focus:border-[#D4A59A] text-responsive"></textarea>
                     </div>
                     
                     <div class="pt-4">
@@ -600,31 +935,31 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 px-6 bg-[#333] text-white relative z-10 section-hidden">
+    <footer class="py-10 px-4 bg-[#333] text-white relative z-10 section-hidden container-padding">
         <div class="max-w-4xl mx-auto">
             <div class="text-center">
-                <h2 class="dancing-script text-3xl text-[#D4A59A] mb-4">Emily & Eselase</h2>
-                <p class="mb-6">August 31, 2025</p>
+                <h2 class="dancing-script text-2xl md:text-3xl text-[#D4A59A] mb-4">Asabed & Nancy</h2>
+                <p class="mb-6 text-responsive">September 20, 2025</p>
                 
                 <div class="flex justify-center gap-4 mb-6">
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
-                        <i class="fab fa-facebook-f"></i>
+                    <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
+                        <i class="fab fa-facebook-f text-sm md:text-base"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
-                        <i class="fab fa-instagram"></i>
+                    <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
+                        <i class="fab fa-instagram text-sm md:text-base"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
-                        <i class="fas fa-envelope"></i>
+                    <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4A59A] transition-all duration-300 transform hover:scale-110">
+                        <i class="fas fa-envelope text-sm md:text-base"></i>
                     </a>
                 </div>
                 
-                <p class="text-sm text-white/70 mb-2">For any questions, please contact:</p>
-                <p class="mb-6">Emily: (123) 456-7890 | Eselase: 024 533 2299</p>
+                <p class="text-sm text-white/70 mb-2 text-responsive">For any questions, please contact:</p>
+                <p class="mb-6 text-responsive">Adwoa: 054 990 3327 | Asabed: 054 525 0794</p>
                 
                 <p class="text-xs text-white/50">Made with <i class="fas fa-heart text-[#D4A59A]"></i> for our special day</p>
                 
                 <div class="mt-6">
-                    <button id="backToTop" class="text-[#D4A59A] hover:text-[#c99387] transition-colors duration-300">
+                    <button id="backToTop" class="text-[#D4A59A] hover:text-[#c99387] transition-colors duration-300 text-responsive">
                         <i class="fas fa-chevron-up mr-2"></i> Back to Top
                     </button>
                 </div>
@@ -635,117 +970,81 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Music player setup
-const music = document.getElementById('weddingMusic');
-const musicControl = document.getElementById('musicControl');
-const musicIcon = document.getElementById('musicIcon');
-let musicPlaying = false;
+        const music = document.getElementById('weddingMusic');
+        const musicControl = document.getElementById('musicControl');
+        const musicIcon = document.getElementById('musicIcon');
+        let musicPlaying = false;
 
-// Set volume to 30%
-music.volume = 0.3;
+        // Set volume to 30%
+        music.volume = 0.3;
 
-// Play music function with multiple attempts
-function playMusic() {
-    // First attempt
-    const promise = music.play();
-    
-    if (promise !== undefined) {
-        promise.catch(error => {
-            console.log('Autoplay prevented, showing play button:', error);
-            // Show play button for manual activation
-            musicControl.style.display = 'block';
-            
-            // Try again after user interaction
-            document.body.addEventListener('click', function bodyClick() {
-                const promise2 = music.play();
-                if (promise2 !== undefined) {
-                    promise2.then(() => {
-                        // Success on interaction
-                        musicPlaying = true;
-                        musicIcon.classList.remove('fa-play');
-                        musicIcon.classList.add('fa-pause');
-                        musicControl.style.display = 'none';
-                        document.body.removeEventListener('click', bodyClick);
-                    }).catch(error => {
-                        console.log('Still prevented:', error);
-                    });
-                }
-            }, { once: true });
-        }).then(() => {
-            // Success on first attempt
-            musicPlaying = true;
-            musicIcon.classList.remove('fa-play');
-            musicIcon.classList.add('fa-pause');
-            musicControl.style.display = 'none';
-        });
-    }
-}
+        // Toggle play/pause
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                musicIcon.classList.remove('fa-volume-up');
+                musicIcon.classList.add('fa-volume-mute');
+            } else {
+                music.play().catch(error => {
+                    console.log('Play failed:', error);
+                });
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+            }
+            musicPlaying = !musicPlaying;
+        }
 
-// Toggle play/pause
-function toggleMusic() {
-    if (musicPlaying) {
-        music.pause();
-        musicIcon.classList.remove('fa-pause');
-        musicIcon.classList.add('fa-play');
-    } else {
-        playMusic();
-    }
-    musicPlaying = !musicPlaying;
-}
+        // Click handler for music control
+        musicControl.addEventListener('click', toggleMusic);
 
-// Click handler for music control
-musicControl.addEventListener('click', toggleMusic);
-
-// Try to autoplay immediately when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    playMusic();
-    
-    // Also try when splash screen is clicked
-    document.getElementById('splashScreen').addEventListener('click', function() {
-        playMusic();
-    });
-});
-
-
-
-
-    
-
-                // Splash Screen Animation
-            const splashScreen = document.getElementById('splashScreen');
-            const splashImages = document.querySelectorAll('.splash-image');
-            
-            // Zoom out animation for splash images
-            splashImages.forEach(img => {
-                img.style.transform = 'scale(1)';
+        // Try to autoplay when user interacts with page
+        function tryAutoplay() {
+            music.play().then(() => {
+                musicPlaying = true;
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+                document.removeEventListener('click', tryAutoplay);
+            }).catch(error => {
+                console.log('Autoplay prevented:', error);
             });
-            
-            // Remove splash screen after 4 seconds
-            setTimeout(() => {
-                splashScreen.style.opacity = '0';
-                splashScreen.style.pointerEvents = 'none';
-                
-                // Create confetti effect
-                createConfetti();
-                
-                // Create floating hearts background
-                createFloatingHearts();
-                
-                // Remove splash screen from DOM after fade out
-                setTimeout(() => {
-                    splashScreen.remove();
-                    
-                    // Trigger section animations
-                    animateSections();
-                }, 1000);
-            }, 4000);
+        }
+
+        document.addEventListener('click', tryAutoplay, { once: true });
+
+        // Splash Screen Animation
+        const splashScreen = document.getElementById('splashScreen');
+        const splashImages = document.querySelectorAll('.splash-image');
+        
+        // Zoom out animation for splash images
+        splashImages.forEach(img => {
+            img.style.transform = 'scale(1)';
         });
+        
+        // Remove splash screen after 4 seconds
+        setTimeout(() => {
+            splashScreen.style.opacity = '0';
+            splashScreen.style.pointerEvents = 'none';
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Create floating hearts background
+            createFloatingHearts();
+            
+            // Remove splash screen from DOM after fade out
+            setTimeout(() => {
+                splashScreen.remove();
+                
+                // Trigger section animations
+                animateSections();
+            }, 2000);
+        }, 8000);
         
         // Background Slider
         const bgImages = [
-            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-            "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80",
-            "https://images.unsplash.com/photo-1519657337289-077653f724ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+            "img4.jpg",
+            "img2.jpg",
+            "img3.jpg",
         ];
         
         let currentBgIndex = 0;
@@ -765,7 +1064,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Countdown Timer
         function updateCountdown() {
-            const weddingDate = new Date('August 31, 2025 14:00:00').getTime();
+            const weddingDate = new Date('September 20, 2025 10:00:00').getTime();
             const now = new Date().getTime();
             const distance = weddingDate - now;
             
@@ -776,22 +1075,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             document.getElementById('countdown').innerHTML = `
                 <div class="text-center transform transition-all duration-300 hover:scale-110">
-                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${days.toString().padStart(2, '0')}</div>
+                    <div class="countdown-number text-2xl md:text-3xl font-bold text-[#D4A59A]">${days.toString().padStart(2, '0')}</div>
                     <div class="text-xs uppercase tracking-wider">Days</div>
                 </div>
-                <div class="text-3xl font-bold text-[#D4A59A]">:</div>
+                <div class="text-2xl md:text-3xl font-bold text-[#D4A59A]">:</div>
                 <div class="text-center transform transition-all duration-300 hover:scale-110">
-                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${hours.toString().padStart(2, '0')}</div>
+                    <div class="countdown-number text-2xl md:text-3xl font-bold text-[#D4A59A]">${hours.toString().padStart(2, '0')}</div>
                     <div class="text-xs uppercase tracking-wider">Hours</div>
                 </div>
-                <div class="text-3xl font-bold text-[#D4A59A]">:</div>
+                <div class="text-2xl md:text-3xl font-bold text-[#D4A59A]">:</div>
                 <div class="text-center transform transition-all duration-300 hover:scale-110">
-                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${minutes.toString().padStart(2, '0')}</div>
+                    <div class="countdown-number text-2xl md:text-3xl font-bold text-[#D4A59A]">${minutes.toString().padStart(2, '0')}</div>
                     <div class="text-xs uppercase tracking-wider">Mins</div>
                 </div>
-                <div class="text-3xl font-bold text-[#D4A59A]">:</div>
+                <div class="text-2xl md:text-3xl font-bold text-[#D4A59A]">:</div>
                 <div class="text-center transform transition-all duration-300 hover:scale-110">
-                    <div class="countdown-number text-3xl font-bold text-[#D4A59A]">${seconds.toString().padStart(2, '0')}</div>
+                    <div class="countdown-number text-2xl md:text-3xl font-bold text-[#D4A59A]">${seconds.toString().padStart(2, '0')}</div>
                     <div class="text-xs uppercase tracking-wider">Secs</div>
                 </div>
             `;
@@ -799,6 +1098,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
         setInterval(updateCountdown, 1000);
         updateCountdown();
+        
+        // RSVP Form Toggle
+        const rsvpToggle = document.getElementById('rsvpToggle');
+        const rsvpForm = document.getElementById('rsvpForm');
+        
+        rsvpToggle.addEventListener('click', function() {
+            rsvpForm.classList.toggle('open');
+            
+            // Scroll to form when opened
+            if (rsvpForm.classList.contains('open')) {
+                setTimeout(() => {
+                    rsvpForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        });
         
         // RSVP Form Submission
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
@@ -925,7 +1239,173 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-       
-    </script>
+        // Bank tabs functionality
+        const bankTabBtns = document.querySelectorAll('.bank-tab-btn');
+        const bankDetails = document.querySelectorAll('.bank-details');
+        
+        bankTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                bankTabBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-[#D4A59A]', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                
+                // Add active class to clicked button
+                btn.classList.add('active', 'bg-[#D4A59A]', 'text-white');
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                
+                // Hide all details
+                bankDetails.forEach(d => d.classList.add('hidden'));
+                
+                // Show corresponding details
+                const bankId = btn.getAttribute('data-bank');
+                document.getElementById(`${bankId}-details`).classList.remove('hidden');
+            });
+        });
+        
+        // Copy bank details functionality
+        const copyBtns = document.querySelectorAll('.copy-btn');
+        
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const bankId = btn.getAttribute('data-copy');
+                const bankDetails = document.getElementById(`${bankId}-details`);
+                
+                // Create text to copy
+                let textToCopy = '';
+                bankDetails.querySelectorAll('p').forEach(p => {
+                    textToCopy += p.textContent + '\n';
+                });
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Show success notification
+                    const notification = document.createElement('div');
+                    notification.className = 'copy-notification';
+                    notification.textContent = 'Bank details copied to clipboard!';
+                    document.body.appendChild(notification);
+                    
+                    // Fade in
+                    setTimeout(() => {
+                        notification.style.opacity = '1';
+                    }, 10);
+                    
+                    // Fade out and remove
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 300);
+                    }, 2000);
+                    
+                    // Animate the copy button
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
+        });
+        
+        // Image Gallery Modal
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.querySelector('.modal-close');
+        const prevBtn = document.querySelector('.modal-nav.prev');
+        const nextBtn = document.querySelector('.modal-nav.next');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        let currentImageIndex = 0;
+        const images = Array.from(galleryItems).map(item => item.querySelector('img').src);
+        
+        // Open modal when clicking on gallery image
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                currentImageIndex = parseInt(item.getAttribute('data-index'));
+                modalImg.src = images[currentImageIndex];
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        });
+        
+        // Close modal
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Re-enable scrolling
+        });
+        
+        // Navigate to previous image
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            modalImg.src = images[currentImageIndex];
+        });
+        
+        // Navigate to next image
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            modalImg.src = images[currentImageIndex];
+        });
+        
+        // Close modal when clicking outside image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = ''; // Re-enable scrolling
+            }
+        });
+        
+        // Swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        modal.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+        
+        modal.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe left - next image
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                modalImg.src = images[currentImageIndex];
+            }
+            
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe right - previous image
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                modalImg.src = images[currentImageIndex];
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (modal.classList.contains('show')) {
+                if (e.key === 'Escape') {
+                    // Close modal on Escape key
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                } else if (e.key === 'ArrowLeft') {
+                    // Previous image on Left arrow
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                    modalImg.src = images[currentImageIndex];
+                } else if (e.key === 'ArrowRight') {
+                    // Next image on Right arrow
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    modalImg.src = images[currentImageIndex];
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>
