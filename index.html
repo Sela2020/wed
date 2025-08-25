@@ -660,6 +660,141 @@
             background: rgba(249, 245, 243, 0.85);
             z-index: -1;
         }
+
+
+
+.disable-animations * {
+    transition: none !important;
+    animation: none !important;
+}
+
+
+        .p-3{
+            padding:0.2rem !important;
+        }
+
+        .p-6{
+            padding: 1.5rem 0.55rem !important;
+        }
+        .p-4{
+            padding: 1rem 0.3rem !important;
+        }
+        .bg-\[\#f9f5f3\].p-4.rounded-lg i{
+            display: none !important;
+        }
+        .px-4{
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+        }
+
+        #musicControl {
+        position: fixed !important;
+        bottom: 1rem !important;
+        right: 1rem !important;
+        z-index: 1000 !important;
+        transition: transform 0.3s ease !important;
+    }
+
+    #musicControl:hover {
+        transform: scale(1.1) !important;
+    }
+
+
+    /* Developer Credit Styling */
+footer .border-t {
+    border-top-color: rgba(255,255,255,0.3) !important;
+}
+
+footer .border-t p {
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+}
+
+footer .border-t span {
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+footer .border-t span:hover {
+    color: #f8f4f0;
+    cursor: default;
+}
+
+/* Improved Contact Info Styling */
+.contact-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.contact-info .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    background: #f9f5f3;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    background: #e8d5cf;
+    transform: translateY(-2px);
+}
+
+.contact-icon {
+    width: 36px;
+    height: 36px;
+    background: #D4AF37;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.contact-icon i {
+    color: white !important;
+    font-size: 16px;
+}
+
+.contact-item div p:first-child {
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #7a6159;
+}
+
+.contact-item div p:last-child {
+    color: #D4AF37;
+    font-weight: 500;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .contact-info .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-item {
+        padding: 0.6rem;
+    }
+}
+
+
+
+
+
+
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
@@ -1035,85 +1170,67 @@ From that day forward, our journey truly began—a journey filled with laughter,
     </div>
 
     <!-- RSVP Section -->
-    <section id="rsvp" class="py-12 px-4 bg-white relative z-10 section-hidden container-padding section-padding">
-        <div class="max-w-2xl mx-auto">
-            <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4AF37] mb-8 heading-responsive">RSVP</h2>
+    <!-- RSVP Section -->
+<section id="rsvp" class="py-12 px-4 bg-white relative z-10 section-hidden container-padding section-padding">
+    <div class="max-w-2xl mx-auto">
+        <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4AF37] mb-8 heading-responsive">RSVP</h2>
+        
+        <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4AF37]/20 transform transition-all duration-500 hover:shadow-xl">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-4 transform transition-all duration-300 hover:rotate-12">
+                    <i class="fas fa-envelope text-white text-2xl"></i>
+                </div>
+                <h3 class="dancing-script text-2xl text-[#D4AF37]">Will you join us?</h3>
+                <p class="text-gray-600 mt-2 text-responsive">Please contact us directly to RSVP</p>
+            </div>
             
-            <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4AF37]/20 transform transition-all duration-500 hover:shadow-xl">
-                <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-4 transform transition-all duration-300 hover:rotate-12">
-                        <i class="fas fa-envelope text-white text-2xl"></i>
-                    </div>
-                    <h3 class="dancing-script text-2xl text-[#D4AF37]">Will you join us?</h3>
-                    <p class="text-gray-600 mt-2 text-responsive">Let us know if you can make it to our special day</p>
-                </div>
-                
-                <div class="rsvp-toggle text-center mb-6" id="rsvpToggle">
-                    <div class="inline-flex items-center justify-center bg-[#D4AF37] text-white rounded-full px-6 py-3 shadow-md hover:bg-[#c99387] transition-all duration-300">
-                        <span class="mr-2">RSVP Now</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-                
-                <!-- RSVP Form (initially hidden) -->
-                <div id="rsvpForm" class="rsvp-form">
-                    <!-- Telephone contacts for direct RSVP -->
-                    <div class="contact-info">
-                        <h4 class="text-center text-lg font-medium text-[#D4AF37] mb-4">Contact us directly:</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Akwasi</p>
-                                    <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Desire</p>
-                                    <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
-                                </div>
-                            </div>
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h4 class="text-center text-lg font-medium text-[#D4AF37] mb-4">Contact us directly:</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Asabed</p>
-                                    <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Nancy</p>
-                                    <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
-                                </div>
-                            </div>
+                        <div>
+                            <p class="font-medium">Akwasi</p>
+                            <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Desire</p>
+                            <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
                         </div>
                     </div>
                 </div>
-                
-                <div id="rsvpSuccess" class="hidden mt-6 p-4 bg-green-100 text-green-700 rounded-md text-center transform transition-all duration-500">
-                    <i class="fas fa-check-circle text-2xl mb-2 animate-bounce"></i>
-                    <p class="font-medium">Thank you for your RSVP!</p>
-                    <p>We look forward to celebrating with you.</p>
-                    <div class="mt-4">
-                        <i class="fas fa-heart text-[#D4AF37] heart-beat"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Asabed</p>
+                            <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Nancy</p>
+                            <p class="text-gray-700"><a href="tel:0549105390">054 910 5390</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="py-10 px-4 bg-[#333] text-white relative z-10 section-hidden container-padding">
@@ -1145,6 +1262,12 @@ From that day forward, our journey truly began—a journey filled with laughter,
                     </button>
                 </div>
             </div>
+        </div>
+        <!-- Developer Credit -->
+        <div class="mt-6 pt-6 border-t border-white/20">
+            <p class="text-xs text-white/50">
+                Designed by <span class="text-[#D4AF37]">Negan</span>
+            </p>
         </div>
     </footer>
 
@@ -1282,36 +1405,8 @@ From that day forward, our journey truly began—a journey filled with laughter,
         setInterval(updateCountdown, 1000);
         updateCountdown();
         
-        // RSVP Form Toggle
-        const rsvpToggle = document.getElementById('rsvpToggle');
-        const rsvpForm = document.getElementById('rsvpForm');
+       
         
-        rsvpToggle.addEventListener('click', function() {
-            rsvpForm.classList.toggle('open');
-            
-            // Scroll to form when opened
-            if (rsvpForm.classList.contains('open')) {
-                setTimeout(() => {
-                    rsvpForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300);
-            }
-        });
-        
-        // RSVP Form Submission
-        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // In a real implementation, you would send this data to a server
-            // For this demo, we'll just show the success message
-            this.classList.add('hidden');
-            document.getElementById('rsvpSuccess').classList.remove('hidden');
-            
-            // Create confetti effect on successful RSVP
-            createConfetti();
-            
-            // Scroll to show the success message
-            document.getElementById('rsvpSuccess').scrollIntoView({ behavior: 'smooth' });
-        });
         
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1589,6 +1684,25 @@ From that day forward, our journey truly began—a journey filled with laughter,
             }
         });
     });
+
+
+    // Add this to your existing JavaScript
+// Improved scrolling performance
+let scrollTimeout;
+window.addEventListener('scroll', function() {
+    // Clear the timeout if it's already set
+    clearTimeout(scrollTimeout);
+    
+    // Add a class to body during scrolling
+    document.body.classList.add('disable-animations');
+    
+    // Set a timeout to remove the class after scrolling stops
+    scrollTimeout = setTimeout(function() {
+        document.body.classList.remove('disable-animations');
+    }, 100);
+});
+
+
 </script>
 </body>
 </html>
