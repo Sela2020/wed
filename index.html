@@ -147,40 +147,46 @@
             }
         }
         
-        /* Wedding colors in row on mobile */
         @media (max-width: 640px) {
-            .colors-container {
-                flex-direction: row;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 0.75rem;
-            }
-            
-            .color-item {
-                width: 70px;
-                height: 90px;
-                margin-bottom: 0;
-            }
-            
-            .color-item h3 {
-                font-size: 0.8rem;
-            }
-        }
-        
-        @media (max-width: 375px) {
-            .colors-container {
-                gap: 0.5rem;
-            }
-            
-            .color-item {
-                width: 60px;
-                height: 80px;
-            }
-            
-            .color-item h3 {
-                font-size: 0.75rem;
-            }
-        }
+    .colors-container {
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        flex-wrap: nowrap !important;
+        gap: 1rem !important;
+        width: 100%;
+        overflow-x: auto;
+        padding: 1rem 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .color-item {
+        width: 100px !important;
+        height: 120px !important;
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+    
+    .color-item h3 {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 375px) {
+    .colors-container {
+        gap: 0.5rem !important;
+        justify-content: space-between !important;
+    }
+    
+    .color-item {
+        width: 85px !important;
+        height: 110px !important;
+    }
+    
+    .color-item h3 {
+        font-size: 0.8rem !important;
+    }
+}
         
         /* Splash Screen Animation */
         .splash-screen {
@@ -1013,17 +1019,17 @@ From that day forward, our journey truly began—a journey filled with laughter,
             <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4AF37] mb-8 heading-responsive">Our Wedding Colors</h2>
             
             <div class="flex flex-col md:flex-row justify-center gap-6 colors-container">
-                <div class="text-center transform transition-all duration-500 hover:scale-110 color-item">
-                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#D4AF37] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
-                    <h3 class="dancing-script text-xl md:text-2xl text-[#D4AF37]">Gold</h3>
-                    <p class="text-gray-600 text-responsive">#D4AF37</p>
-                </div>
-                <div class="text-center transform transition-all duration-500 hover:scale-110 color-item">
-                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#f8f4f0] mx-auto mb-4 shadow-lg transform transition-all duration-300 hover:rotate-12 border border-gray-200"></div>
-                    <h3 class="dancing-script text-xl md:text-2xl text-gray-600">Ivory</h3>
-                    <p class="text-gray-600 text-responsive">#f8f4f0</p>
-                </div>
-            </div>
+    <div class="text-center transform transition-all duration-500 hover:scale-110 color-item">
+        <div class="w-20 h-20 md:w-32 md:h-32 rounded-full bg-[#D4AF37] mx-auto mb-3 shadow-lg transform transition-all duration-300 hover:rotate-12"></div>
+        <h3 class="dancing-script text-lg md:text-2xl text-[#D4AF37]">Gold</h3>
+        <p class="text-gray-600 text-xs md:text-responsive">#D4AF37</p>
+    </div>
+    <div class="text-center transform transition-all duration-500 hover:scale-110 color-item">
+        <div class="w-20 h-20 md:w-32 md:h-32 rounded-full bg-[#f8f4f0] mx-auto mb-3 shadow-lg transform transition-all duration-300 hover:rotate-12 border border-gray-200"></div>
+        <h3 class="dancing-script text-lg md:text-2xl text-gray-600">Ivory</h3>
+        <p class="text-gray-600 text-xs md:text-responsive">#f8f4f0</p>
+    </div>
+</div>
         </div>
     </section>
 
