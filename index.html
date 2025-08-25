@@ -790,10 +790,33 @@ footer .border-t span:hover {
     }
 }
 
+/* Fix for the bouncing arrow */
+.absolute.animate-bounce {
+    animation: none !important;
+    transition: transform 0.3s ease;
+}
+
+.absolute.animate-bounce:hover {
+    transform: translate(-50%, 5px);
+}
 
 
+/* Subtle pulse animation instead of bounce */
+.pulse-arrow {
+    animation: pulse-arrow 2s infinite;
+}
 
+@keyframes pulse-arrow {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    50% { transform: translate(-50%, 8px); opacity: 0.7; }
+    100% { transform: translate(-50%, 0); opacity: 1; }
+}
 
+/* Disable animation when scrolling */
+.disable-animations .pulse-arrow {
+    animation: none;
+    opacity: 0.7;
+}
 
     </style>
 </head>
@@ -864,9 +887,9 @@ footer .border-t span:hover {
         </div>
         
         <!-- Floating decorative elements -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i class="fas fa-chevron-down text-2xl text-[#D4AF37]"></i>
-        </div>
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 pulse-arrow">
+                <i class="fas fa-chevron-down text-2xl text-[#D4AF37]"></i>
+            </div>
     </section>
 
     <!-- Ceremonies Section -->
@@ -1266,7 +1289,7 @@ From that day forward, our journey truly began—a journey filled with laughter,
         <!-- Developer Credit -->
         <div class="mt-6 pt-6 border-t border-white/20">
             <p class="text-xs text-white/50">
-                Designed by <span class="text-[#D4AF37]">Negan</span>
+                <a href="https://connexapro.netlify.app/ceo">Designed by <span class="text-[#D4AF37]"> Negan</span></a>
             </p>
         </div>
     </footer>
