@@ -17,6 +17,10 @@
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            background: #f9f5f3; /* Consistent background color */
+        }
+        html{
+            scroll-behavior: smooth;
         }
         
         .dancing-script {
@@ -60,10 +64,10 @@
             }
         }
         
-        @media (max-width: 375px) {
+        @media (max-width: 480px) {
             .container-padding {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
             }
             
             .section-padding {
@@ -91,6 +95,56 @@
                 font-size: 0.75rem;
                 padding: 6px 12px;
             }
+            
+            /* Fix for very small screens */
+            .xs-flex-col {
+                flex-direction: column;
+            }
+            
+            .xs-text-center {
+                text-align: center;
+            }
+            
+            .xs-p-2 {
+                padding: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .container-padding {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            
+            .section-padding {
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+            }
+            
+            .heading-responsive {
+                font-size: 1.5rem;
+            }
+            
+            .text-responsive {
+                font-size: 0.8rem;
+            }
+            
+            .countdown-number {
+                font-size: 1.2rem;
+            }
+            
+            .gallery-item {
+                height: 90px;
+            }
+            
+            .bank-details p {
+                font-size: 0.75rem;
+            }
+            
+            .bank-tab-btn {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
         }
         
         /* Wedding colors in row on mobile */
@@ -98,16 +152,33 @@
             .colors-container {
                 flex-direction: row;
                 justify-content: center;
-                gap: 1rem;
+                flex-wrap: wrap;
+                gap: 0.75rem;
             }
             
             .color-item {
-                width: 80px;
+                width: 70px;
+                height: 90px;
+                margin-bottom: 0;
+            }
+            
+            .color-item h3 {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .colors-container {
+                gap: 0.5rem;
+            }
+            
+            .color-item {
+                width: 60px;
                 height: 80px;
             }
             
             .color-item h3 {
-                font-size: 0.9rem;
+                font-size: 0.75rem;
             }
         }
         
@@ -485,29 +556,117 @@
                 transform: scale(1);
             }
         }
-        #musicControl{
-            display: non;
+        
+        /* RSVP Form Styling */
+        .rsvp-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
         }
-        .p-3{
-            padding:0.2rem !important;
+        
+        .rsvp-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
         }
-
-        .p-6{
-            padding: 1.5rem 0.55rem !important;
+        
+        .rsvp-submit {
+            background: #D4AF37;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            width: 100%;
+            transition: background 0.3s ease;
         }
-        .p-4{
-            padding: 1rem 0.3rem !important;
+        
+        .rsvp-submit:hover {
+            background: #c99387;
         }
-        .bg-\[\#f9f5f3\].p-4.rounded-lg i{
-            display: none !important;
+        
+        /* Contact Info Styling */
+        .contact-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
-        .px-4{
-            padding-left: 0.5rem !important;
-            padding-right: 0.5rem !important;
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .contact-icon {
+            width: 30px;
+            color: #D4AF37;
+        }
+        
+        /* Fix for music control display */
+        #musicControl {
+            display: block !important;
+            z-index: 100;
+        }
+        
+        /* Fix padding issues */
+        .p-3 {
+            padding: 0.75rem !important;
+        }
+        
+        .p-6 {
+            padding: 1.5rem !important;
+        }
+        
+        .p-4 {
+            padding: 1rem !important;
+        }
+        
+        .px-4 {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        
+        /* Fix for bank details icons */
+        .bg-\[\#f9f5f3\].p-4.rounded-lg i {
+            display: inline-block !important;
+        }
+        
+        /* Background image fix */
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: url('img1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(249, 245, 243, 0.85);
+            z-index: -1;
         }
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
+    <!-- Consistent background -->
+    <div class="bg-fixed"></div>
+    <div class="bg-overlay"></div>
+    
     <!-- Audio Player -->
     <audio id="weddingMusic" loop>
         <source src="best.mp3" type="audio/mpeg">
@@ -544,14 +703,8 @@
     <!-- Floating Hearts Background -->
     <div class="floating-hearts" id="floatingHearts"></div>
 
-    <!-- Background Slider -->
-    <div class="fixed inset-0 -z-10 overflow-hidden">
-        <div class="absolute inset-0 bg-black/30 z-10"></div>
-        <div id="bgSlider" class="h-full w-full bg-cover bg-center transition-all duration-1000 ease-in-out" style="background-image: url('img1.jpg')"></div>
-    </div>
-
     <!-- Landing Section -->
-    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 py-16 relative z-10 container-padding">
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 py-16 relative z-10 container-padding section-padding">
         <div class="bg-white/90 backdrop-blur-sm rounded-lg p-6 max-w-md w-full shadow-lg transform transition-all duration-500 hover:shadow-xl section-hidden">
             <div class="heart-beat mb-4">
                 <i class="fas fa-heart text-4xl text-[#D4AF37]"></i>
@@ -593,8 +746,8 @@ friends who became family in countless ways.<br>
             </p><br>
             <p class="text-gray-700 text-responsive text-center">
 Through laughter and tears, through sunshine and rain,<br>
-you’ve lifted our spirits, again and again.<br>
-You’ve cheered, steadied, and carried us through,<br>
+you've lifted our spirits, again and again.<br>
+You've cheered, steadied, and carried us through,<br>
 and shaped the story that brought us to you.<br>
 
             </p><br>
@@ -602,7 +755,7 @@ and shaped the story that brought us to you.<br>
 On the 20th of September, 2025, we say,<br>
 Asabed and Nancy begin their new way.<br>
 Hand in hand, hearts open, together we stand,<br>
-woven with love, surrounded by friends’ gentle hands.<br>
+woven with love, surrounded by friends' gentle hands.<br>
 
             </p><br>
             <p class="text-gray-700 text-responsive text-center">
@@ -610,7 +763,7 @@ woven with love, surrounded by friends’ gentle hands.<br>
 This day is a tapestry, stitched with each smile,<br>
 a celebration of life, of love, and of every mile.<br>
 It is not only ours, this moment so true—<br>
-it is brighter, fuller, because of all of you.<br>
+it is brighter, fuller, because of all of you.<br>
             </p><br><br><br>
             <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4AF37]/20 transform transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
                 <div class="text-center mb-4">
@@ -666,7 +819,7 @@ From that day forward, our journey truly began—a journey filled with laughter,
                     <div class="md:w-1/2">
                         <div class="bg-white p-6 rounded-lg shadow-md h-full transform transition-all duration-500 hover:-translate-y-2">
                             <h3 class="dancing-script text-2xl text-[#D4AF37] mb-4">The Proposal</h3>
-                            <p class="text-gray-700 text-responsive">What began as a simple holiday became the most magical chapter of our love story. Asabed whisked me away to another city, where we explored hidden gems, created unforgettable memories, and shared laughter that filled my heart with joy.<br>One evening, after dinner with his friends, we strolled hand in hand by the bay, the water shimmering beneath the night sky. Ships swayed gently as if sharing our moment. Then, with city lights dancing on the waves, Asabed suddenly turned to me. With love in his eyes, he dropped to one knee and asked me to spend forever with him. My heart overflowed—tears of joy fell as I whispered yes, to the man of my dreams, my best friend, my forever.</p>
+                            <p class="text-gray-700 text-responsive">What began as a simple holiday became the most magical chapter of our love story. Asabed whisked me away to another city, where we explored hidden gems, created unforgettable memories, and shared laughter that filled my heart with joy.<br><br>One evening, after dinner with his friends, we strolled hand in hand by the bay, the water shimmering beneath the night sky. Ships swayed gently as if sharing our moment. Then, with city lights dancing on the waves, Asabed suddenly turned to me. With love in his eyes, he dropped to one knee and asked me to spend forever with him. My heart overflowed—tears of joy fell as I whispered yes, to the man of my dreams, my best friend, my forever.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2 transform transition-all duration-500 hover:scale-105">
@@ -737,7 +890,7 @@ From that day forward, our journey truly began—a journey filled with laughter,
                         <p class="text-gray-700 text-responsive">Presbyterian Church of Ghana</p>
                         <p class="text-gray-700 text-responsive">Ramseyer Memorial Congregation</p>
                         <p class="text-gray-700 text-responsive">Adum - Kumasi</p>
-                        <a href="https://www.google.com/maps/dir//Presbyterian+Church+of+Ghana,+Ramseyer+Memorial+Congregation,+21+Ankobea+Street,+Kumasi/@6.6894324,-1.6232989,17z/data=!4m9!4m8!1m0!1m5!1m1!1s0xfdb96ec3edcf8a9:0x900f8498763a0806!2m2!1d-1.620724!2d6.6894324!3e0?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D" class="mt-2 inline-block text-[#D4AF37] hover:underline text-responsive">Get Directions</a>
+                        <a href="https://www.google.com/maps/dir//Presbyterian+Church+of+Ghana,+Ramseyer+Memorial+Congregation,+21+Ankobea+Street,+Kumasi/@6.6894324,-1.6232989,17z/data=!4m9!4m8!1m0!1m5!1m1!1s0xfdb96ec3edcf8a9:0x900f8498763a0806!2m2!1d-1.620724!2d6.6894324!3e0?entry=ttu&g_ep=EgoyMDI5MDgxOS4wIKXMDSoASAFQAw%3D%3D" class="mt-2 inline-block text-[#D4AF37] hover:underline text-responsive">Get Directions</a>
                     </div>
                 </div>
             </div>
@@ -748,8 +901,9 @@ From that day forward, our journey truly began—a journey filled with laughter,
     <section class="py-12 px-4 bg-white relative z-10 section-hidden container-padding section-padding">
         <div class="max-w-4xl mx-auto">
             <h2 class="dancing-script text-3xl md:text-4xl text-center text-[#D4AF37] mb-8 heading-responsive">Gifts</h2>
-            
-            <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4AF37]/20 transform transition-all duration-500 hover:shadow-xl">
+
+
+             <div class="bg-white p-6 rounded-lg shadow-lg border border-[#D4AF37]/20 transform transition-all duration-500 hover:shadow-xl">
                 <div class="text-center mb-6">
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto transform transition-all duration-300 hover:rotate-12">
                         <i class="fas fa-gift text-white text-2xl md:text-3xl"></i>
@@ -859,13 +1013,13 @@ From that day forward, our journey truly began—a journey filled with laughter,
                     <img src="img5.jpg" alt="Couple photo 5" class="w-full h-full object-cover">
                 </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="5">
-                    <img src="" alt="Couple photo 6" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 6" class="w-full h-full object-cover">
                 </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="6">
-                    <img src="" alt="Couple photo 7" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Couple photo 7" class="w-full h-full object-cover">
                 </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="7">
-                    <img src="" alt="Couple photo 8" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1549439602-43ebca2327af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 8" class="w-full h-full object-cover">
                 </div>
             </div>
             
@@ -903,6 +1057,84 @@ From that day forward, our journey truly began—a journey filled with laughter,
                     <div class="inline-flex items-center justify-center bg-[#D4AF37] text-white rounded-full px-6 py-3 shadow-md hover:bg-[#c99387] transition-all duration-300">
                         <span class="mr-2">RSVP Now</span>
                         <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                
+                <!-- RSVP Form (initially hidden) -->
+                <div id="rsvpForm" class="rsvp-form">
+                    <form class="space-y-4">
+                        <div>
+                            <label class="rsvp-label" for="name">Full Name</label>
+                            <input type="text" id="name" class="rsvp-input" placeholder="Your full name" required>
+                        </div>
+                        
+                        <div>
+                            <label class="rsvp-label" for="email">Email Address</label>
+                            <input type="email" id="email" class="rsvp-input" placeholder="Your email address">
+                        </div>
+                        
+                        <div>
+                            <label class="rsvp-label" for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="rsvp-input" placeholder="Your phone number">
+                        </div>
+                        
+                        <div>
+                            <label class="rsvp-label" for="guests">Number of Guests</label>
+                            <select id="guests" class="rsvp-input" required>
+                                <option value="">Select number of guests</option>
+                                <option value="1">1 (Just me)</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5 or more</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="rsvp-label">Will you attend?</label>
+                            <div class="flex space-x-4 mt-2">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="attendance" value="yes" class="form-radio text-[#D4AF37]" required>
+                                    <span class="ml-2">Yes, I'll be there!</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="attendance" value="no" class="form-radio text-[#D4AF37]">
+                                    <span class="ml-2">Sorry, can't make it</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="rsvp-label" for="message">Message (Optional)</label>
+                            <textarea id="message" class="rsvp-input" rows="3" placeholder="Any dietary restrictions or special requests?"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="rsvp-submit">Submit RSVP</button>
+                    </form>
+                    
+                    <!-- Telephone contacts for direct RSVP -->
+                    <div class="contact-info">
+                        <h4 class="text-center text-lg font-medium text-[#D4AF37] mb-4">Or contact us directly:</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Akwasi</p>
+                                    <p class="text-gray-700">054 910 5390</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Desire</p>
+                                    <p class="text-gray-700">024 173 3948</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -1022,13 +1254,15 @@ From that day forward, our journey truly began—a journey filled with laughter,
                 // Trigger section animations
                 animateSections();
             }, 2000);
-        }, 8000);
+        }, 4000);
         
         // Background Slider
         const bgImages = [
-            "img4.jpg",
+            "img1.jpg",
             "img2.jpg",
             "img3.jpg",
+            "img4.jpg",
+            "img5.jpg"
         ];
         
         let currentBgIndex = 0;
@@ -1176,7 +1410,7 @@ From that day forward, our journey truly began—a journey filled with laughter,
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.width = Math.random() * 10 + 5 + 'px';
                 confetti.style.height = Math.random() * 10 + 5 + 'px';
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.bridius = Math.random() > 0.5 ? '50%' : '0';
                 confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
                 
                 document.body.appendChild(confetti);
