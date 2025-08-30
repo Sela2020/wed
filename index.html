@@ -1330,26 +1330,17 @@ From that day forward, our journey truly began, a journey filled with laughter, 
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="0">
                     <img src="img6.jpg" alt="Couple photo 1" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="7">
-                    <img src="https://images.unsplash.com/photo-1549439602-43ebca2327af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Couple photo 8" class="w-full h-full object-cover">
-                </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="1">
                     <img src="img2.jpg" alt="Couple photo 2" class="w-full h-full object-cover">
                 </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="2">
                     <img src="img10.jpg" alt="Couple photo 3" class="w-full h-full object-cover">
                 </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="6">
-                    <img src="https://images.pexels.com/photos/33522473/pexels-photo-33522473.jpeg" alt="Couple photo 7" class="w-full h-full object-cover">
-                </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="3">
                     <img src="img4.jpg" alt="Couple photo 4" class="w-full h-full object-cover">
                 </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="4">
                     <img src="img6.jpg" alt="Couple photo 5" class="w-full h-full object-cover">
-                </div>
-                <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="5">
-                    <img src="https://images.pexels.com/photos/931179/pexels-photo-931179.jpeg" alt="Couple photo 6" class="w-full h-full object-cover">
                 </div>
                 <div class="gallery-item overflow-hidden rounded-lg shadow-md h-32 md:h-64" data-index="2">
                     <img src="img1.jpg" alt="Couple photo 3" class="w-full h-full object-cover">
@@ -1537,115 +1528,102 @@ From that day forward, our journey truly began, a journey filled with laughter, 
         </div>
     </footer>
 
-    <script>
+<script>
+            // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
-        // Music player setup
+        // ===== MUSIC PLAYER =====
         const music = document.getElementById('weddingMusic');
         const musicControl = document.getElementById('musicControl');
         const musicIcon = document.getElementById('musicIcon');
         let musicPlaying = false;
-
+        
         // Set volume to 30%
-        music.volume = 0.3;
+        if (music) {
+            music.volume = 0.3;
+        }
 
         // Toggle play/pause
         function toggleMusic() {
+            if (!music) return;
+            
             if (musicPlaying) {
                 music.pause();
                 musicIcon.classList.remove('fa-volume-up');
                 musicIcon.classList.add('fa-volume-mute');
             } else {
-                music.play().catch(error => {
-                    console.log('Play failed:', error);
-                });
-                musicIcon.classList.remove('fa-volume-mute');
-                musicIcon.classList.add('fa-volume-up');
+                const playPromise = music.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        musicIcon.classList.remove('fa-volume-mute');
+                        musicIcon.classList.add('fa-volume-up');
+                    }).catch(error => {
+                        console.log('Play failed:', error);
+                    });
+                }
             }
             musicPlaying = !musicPlaying;
         }
 
         // Click handler for music control
-        musicControl.addEventListener('click', toggleMusic);
-
-        // Try to autoplay when user interacts with page
-        function tryAutoplay() {
-            music.play().then(() => {
-                musicPlaying = true;
-                musicIcon.classList.remove('fa-volume-mute');
-                musicIcon.classList.add('fa-volume-up');
-                document.removeEventListener('click', tryAutoplay);
-            }).catch(error => {
-                console.log('Autoplay prevented:', error);
-            });
+        if (musicControl) {
+            musicControl.addEventListener('click', toggleMusic);
         }
 
-        document.addEventListener('click', tryAutoplay, { once: true });
-
-        // Splash Screen Animation
+        // ===== SPLASH SCREEN ANIMATION =====
         const splashScreen = document.getElementById('splashScreen');
-        const splashImages = document.querySelectorAll('.splash-image');
         
-        // Zoom out animation for splash images
-        splashImages.forEach(img => {
-            img.style.transform = 'scale(1)';
-        });
-        
-        // Remove splash screen after 4 seconds
-        setTimeout(() => {
-            splashScreen.style.opacity = '0';
-            splashScreen.style.pointerEvents = 'none';
+        if (splashScreen) {
+            const splashImages = document.querySelectorAll('.splash-image');
             
-            // Create confetti effect
-            createConfetti();
+            // Zoom out animation for splash images
+            splashImages.forEach(img => {
+                img.style.transform = 'scale(1)';
+            });
             
-            // Create floating hearts background
-            createFloatingHearts();
-            
-            // Remove splash screen from DOM after fade out
+            // Remove splash screen after 4 seconds
             setTimeout(() => {
-                splashScreen.remove();
+                splashScreen.style.opacity = '0';
+                splashScreen.style.pointerEvents = 'none';
                 
-                // Trigger section animations
-                animateSections();
-            }, 2000);
-        }, 7500);
-        
-        // Background Slider
-        const bgImages = [
-            "img1.jpg",
-            "img2.jpg",
-            "img3.jpg",
-            "img4.jpg",
-            "img5.jpg"
-        ];
-        
-        let currentBgIndex = 0;
-        const bgSlider = document.getElementById('bgSlider');
-        
-        function changeBackground() {
-            currentBgIndex = (currentBgIndex + 1) % bgImages.length;
-            bgSlider.style.opacity = 0;
-            
-            setTimeout(() => {
-                bgSlider.style.backgroundImage = `url(${bgImages[currentBgIndex]})`;
-                bgSlider.style.opacity = 1;
-            }, 1000);
+                // Create confetti effect
+                createConfetti();
+                
+                // Create floating hearts background
+                createFloatingHearts();
+                
+                // Remove splash screen from DOM after fade out
+                setTimeout(() => {
+                    if (splashScreen.parentNode) {
+                        splashScreen.parentNode.removeChild(splashScreen);
+                    }
+                    
+                    // Trigger section animations
+                    animateSections();
+                }, 2000);
+            }, 4000); // Reduced from 7500ms to 4000ms for better UX
         }
-        
-        setInterval(changeBackground, 5000);
-        
-        // Countdown Timer
+
+        // ===== COUNTDOWN TIMER =====
         function updateCountdown() {
+            const countdownEl = document.getElementById('countdown');
+            if (!countdownEl) return;
+            
             const weddingDate = new Date('September 20, 2025 10:00:00').getTime();
             const now = new Date().getTime();
             const distance = weddingDate - now;
+            
+            // Don't update if date has passed
+            if (distance < 0) {
+                countdownEl.innerHTML = '<div class="text-center"><div class="countdown-number text-2xl md:text-3xl font-bold text-[#D4AF37]">00</div><div class="text-xs uppercase tracking-wider">We\'re Married!</div></div>';
+                return;
+            }
             
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            document.getElementById('countdown').innerHTML = `
+            countdownEl.innerHTML = `
                 <div class="text-center transform transition-all duration-300 hover:scale-110">
                     <div class="countdown-number text-2xl md:text-3xl font-bold text-[#D4AF37]">${days.toString().padStart(2, '0')}</div>
                     <div class="text-xs uppercase tracking-wider">Days</div>
@@ -1668,13 +1646,11 @@ From that day forward, our journey truly began, a journey filled with laughter, 
             `;
         }
         
-        setInterval(updateCountdown, 1000);
+        // Initialize and update countdown
         updateCountdown();
+        setInterval(updateCountdown, 1000);
         
-       
-        
-        
-        // Smooth scrolling for anchor links
+        // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1685,50 +1661,71 @@ From that day forward, our journey truly began, a journey filled with laughter, 
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     targetElement.scrollIntoView({
-                        behavior: 'smooth'
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 }
             });
         });
         
-        // Back to top button
-        document.getElementById('backToTop').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // View more photos button
-        document.getElementById('viewMoreBtn').addEventListener('click', function() {
-            alert('In a real implementation, this would show more photos or open a photo gallery!');
-            createConfetti();
-        });
-        
-        // Animate sections when they come into view
-        function animateSections() {
-            const sections = document.querySelectorAll('.section-hidden');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('section-show');
-                    }
+        // ===== BACK TO TOP BUTTON =====
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
-            }, {
-                threshold: 0.1
-            });
-            
-            sections.forEach(section => {
-                observer.observe(section);
             });
         }
         
-        // Create confetti effect
-        function createConfetti() {
-            const colors = ['#D4AF37', '#D4AF37', '#f8f4f0', '#ffffff'];
+        // ===== VIEW MORE PHOTOS BUTTON =====
+        const viewMoreBtn = document.getElementById('viewMoreBtn');
+        if (viewMoreBtn) {
+            viewMoreBtn.addEventListener('click', function() {
+                // Scroll to gallery section instead of alert
+                const gallerySection = document.querySelector('.gallery-grid');
+                if (gallerySection) {
+                    gallerySection.scrollIntoView({ behavior: 'smooth' });
+                }
+                createConfetti();
+            });
+        }
+        
+        // ===== INTERSECTION OBSERVER FOR ANIMATIONS =====
+        function animateSections() {
+            const sections = document.querySelectorAll('.section-hidden');
             
-            for (let i = 0; i < 100; i++) {
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('section-show');
+                            // Stop observing after animation
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+                
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            } else {
+                // Fallback for browsers without Intersection Observer
+                sections.forEach(section => {
+                    section.classList.add('section-show');
+                });
+            }
+        }
+        
+        // ===== CONFETTI EFFECT =====
+        function createConfetti() {
+            const colors = ['#D4AF37', '#800080', '#005600', '#f8f4f0', '#ffffff'];
+            
+            for (let i = 0; i < 50; i++) { // Reduced from 100 to 50 for performance
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + 'vw';
@@ -1736,54 +1733,56 @@ From that day forward, our journey truly began, a journey filled with laughter, 
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.width = Math.random() * 10 + 5 + 'px';
                 confetti.style.height = Math.random() * 10 + 5 + 'px';
-                confetti.style.bridius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
                 confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
                 
                 document.body.appendChild(confetti);
                 
                 const animationDuration = Math.random() * 3 + 2;
                 
-                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                // Animate using requestAnimationFrame for better performance
+                let startTime = null;
                 
-                // Create keyframes for falling animation
-                const style = document.createElement('style');
-                style.innerHTML = `
-                    @keyframes fall {
-                        to {
-                            transform: translateY(100vh) rotate(360deg);
-                            opacity: 0;
+                function animateConfetti(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const progress = (timestamp - startTime) / (animationDuration * 1000);
+                    
+                    if (progress < 1) {
+                        confetti.style.transform = `translateY(${progress * 100}vh) rotate(${progress * 360}deg)`;
+                        confetti.style.opacity = (1 - progress).toString();
+                        requestAnimationFrame(animateConfetti);
+                    } else {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
                         }
                     }
-                `;
-                document.head.appendChild(style);
+                }
                 
-                // Remove confetti after animation
-                setTimeout(() => {
-                    confetti.remove();
-                    style.remove();
-                }, animationDuration * 1000);
+                requestAnimationFrame(animateConfetti);
             }
         }
         
-        // Create floating hearts background
+        // ===== FLOATING HEARTS BACKGROUND =====
         function createFloatingHearts() {
             const heartsContainer = document.getElementById('floatingHearts');
+            if (!heartsContainer) return;
             
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 15; i++) { // Reduced from 20 to 15 for performance
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.innerHTML = '❤';
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.top = Math.random() * 100 + 'vh';
-                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-                heart.style.animationDuration = Math.random() * 10 + 10 + 's';
+                heart.style.fontSize = Math.random() * 15 + 10 + 'px'; // Reduced max size
+                heart.style.opacity = Math.random() * 0.5 + 0.3; // More transparent for better aesthetics
+                heart.style.animationDuration = Math.random() * 8 + 8 + 's'; // Slower animation
                 heart.style.animationDelay = Math.random() * 5 + 's';
                 
                 heartsContainer.appendChild(heart);
             }
         }
 
-        // Bank tabs functionality
+        // ===== BANK TABS FUNCTIONALITY =====
         const bankTabBtns = document.querySelectorAll('.bank-tab-btn');
         const bankDetails = document.querySelectorAll('.bank-details');
         
@@ -1791,30 +1790,32 @@ From that day forward, our journey truly began, a journey filled with laughter, 
             btn.addEventListener('click', () => {
                 // Remove active class from all buttons
                 bankTabBtns.forEach(b => {
-                    b.classList.remove('active', 'bg-[#D4AF37]', 'text-white');
-                    b.classList.add('bg-gray-200', 'text-gray-700');
+                    b.classList.remove('active');
                 });
                 
                 // Add active class to clicked button
-                btn.classList.add('active', 'bg-[#D4AF37]', 'text-white');
-                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                btn.classList.add('active');
                 
                 // Hide all details
                 bankDetails.forEach(d => d.classList.add('hidden'));
                 
                 // Show corresponding details
                 const bankId = btn.getAttribute('data-bank');
-                document.getElementById(`${bankId}-details`).classList.remove('hidden');
+                const detailsElement = document.getElementById(`${bankId}-details`);
+                if (detailsElement) {
+                    detailsElement.classList.remove('hidden');
+                }
             });
         });
         
-        // Copy bank details functionality
+        // ===== COPY BANK DETAILS FUNCTIONALITY =====
         const copyBtns = document.querySelectorAll('.copy-btn');
         
         copyBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const bankId = btn.getAttribute('data-copy');
                 const bankDetails = document.getElementById(`${bankId}-details`);
+                if (!bankDetails) return;
                 
                 // Create text to copy
                 let textToCopy = '';
@@ -1839,21 +1840,28 @@ From that day forward, our journey truly began, a journey filled with laughter, 
                     setTimeout(() => {
                         notification.style.opacity = '0';
                         setTimeout(() => {
-                            notification.remove();
+                            if (notification.parentNode) {
+                                notification.parentNode.removeChild(notification);
+                            }
                         }, 300);
                     }, 2000);
                     
                     // Animate the copy button
                     const originalText = btn.innerHTML;
                     btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    btn.style.backgroundColor = '#4caf50';
+                    
                     setTimeout(() => {
                         btn.innerHTML = originalText;
+                        btn.style.backgroundColor = '';
                     }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
                 });
             });
         });
         
-        // Image Gallery Modal
+        // ===== IMAGE GALLERY MODAL =====
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImage');
         const closeBtn = document.querySelector('.modal-close');
@@ -1862,78 +1870,89 @@ From that day forward, our journey truly began, a journey filled with laughter, 
         const galleryItems = document.querySelectorAll('.gallery-item');
         
         let currentImageIndex = 0;
-        const images = Array.from(galleryItems).map(item => item.querySelector('img').src);
+        const images = Array.from(galleryItems).map(item => {
+            const img = item.querySelector('img');
+            return img ? img.src : '';
+        }).filter(src => src !== '');
         
         // Open modal when clicking on gallery image
         galleryItems.forEach(item => {
             item.addEventListener('click', () => {
-                currentImageIndex = parseInt(item.getAttribute('data-index'));
-                modalImg.src = images[currentImageIndex];
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                const index = parseInt(item.getAttribute('data-index'));
+                if (!isNaN(index) && images[index]) {
+                    currentImageIndex = index;
+                    modalImg.src = images[currentImageIndex];
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
             });
         });
         
         // Close modal
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('show');
-            document.body.style.overflow = ''; // Re-enable scrolling
-        });
-        
-        // Navigate to previous image
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            modalImg.src = images[currentImageIndex];
-        });
-        
-        // Navigate to next image
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            modalImg.src = images[currentImageIndex];
-        });
-        
-        // Close modal when clicking outside image
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
                 modal.classList.remove('show');
                 document.body.style.overflow = ''; // Re-enable scrolling
-            }
-        });
+            });
+        }
+        
+        // Navigate to previous image
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                modalImg.src = images[currentImageIndex];
+            });
+        }
+        
+        // Navigate to next image
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                modalImg.src = images[currentImageIndex];
+            });
+        }
+        
+        // Close modal when clicking outside image
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = ''; // Re-enable scrolling
+                }
+            });
+        }
         
         // Swipe support for mobile
         let touchStartX = 0;
-        let touchEndX = 0;
         
-        modal.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, false);
-        
-        modal.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, false);
-        
-        function handleSwipe() {
-            const swipeThreshold = 50;
+        if (modal) {
+            modal.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
             
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // Swipe left - next image
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                modalImg.src = images[currentImageIndex];
-            }
-            
-            if (touchEndX > touchStartX + swipeThreshold) {
-                // Swipe right - previous image
-                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                modalImg.src = images[currentImageIndex];
-            }
+            modal.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].screenX;
+                const swipeThreshold = 50;
+                
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swipe left - next image
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    modalImg.src = images[currentImageIndex];
+                }
+                
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swipe right - previous image
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                    modalImg.src = images[currentImageIndex];
+                }
+            }, { passive: true });
         }
         
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (modal.classList.contains('show')) {
+            if (modal && modal.classList.contains('show')) {
                 if (e.key === 'Escape') {
                     // Close modal on Escape key
                     modal.classList.remove('show');
@@ -1949,218 +1968,201 @@ From that day forward, our journey truly began, a journey filled with laughter, 
                 }
             }
         });
-    });
-
-
-    // Add this to your existing JavaScript
-// Improved scrolling performance
-let scrollTimeout;
-window.addEventListener('scroll', function() {
-    // Clear the timeout if it's already set
-    clearTimeout(scrollTimeout);
-    
-    // Add a class to body during scrolling
-    document.body.classList.add('disable-animations');
-    
-    // Set a timeout to remove the class after scrolling stops
-    scrollTimeout = setTimeout(function() {
-        document.body.classList.remove('disable-animations');
-    }, 100);
-});
-
-
-// Image Slider Functionality
-function initImageSlider() {
-    const sliderTrack = document.querySelector('.slider-track');
-    const sliderDots = document.querySelector('.slider-dots');
-    const prevBtn = document.querySelector('.slider-prev');
-    const nextBtn = document.querySelector('.slider-next');
-    
-    // Replace these with your actual image paths
-    const images = [
-        '1.jpg',
-        '2.jpg',
-        '4.jpg',
-        'a.jpg',
-        'b.jpg',
-        '5.jpg',
-        '6.jpg',
-        '7.jpg',
-        '8.jpg',
-        '9.jpg',
-        '10.jpg',
-        '11.jpg',
-        '12.jpg',
-        '13.jpg',
-        '14.jpg',
-        '15.jpg',
-        '16.jpg'
-    ];
-    
-    let currentSlide = 0;
-    let autoPlayInterval;
-    let slideElements = [];
-    
-    // Clear existing content
-    sliderTrack.innerHTML = '';
-    sliderDots.innerHTML = '';
-    
-    // Create slides
-    images.forEach((imgSrc, index) => {
-        const slide = document.createElement('div');
-        slide.className = 'slide';
         
-        const slideInner = document.createElement('div');
-        slideInner.className = 'slide-inner';
+        // ===== SCROLL PERFORMANCE OPTIMIZATION =====
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            // Clear the timeout if it's already set
+            clearTimeout(scrollTimeout);
+            
+            // Add a class to body during scrolling
+            document.body.classList.add('disable-animations');
+            
+            // Set a timeout to remove the class after scrolling stops
+            scrollTimeout = setTimeout(function() {
+                document.body.classList.remove('disable-animations');
+            }, 100);
+        });
         
-        const img = document.createElement('img');
-        img.src = imgSrc;
-        img.alt = `Memory ${index + 1}`;
-        img.onload = function() {
-            // Determine if image is portrait or landscape
-            if (this.naturalHeight > this.naturalWidth) {
-                slide.classList.add('portrait');
-            } else {
-                slide.classList.add('landscape');
+        // ===== IMAGE SLIDER FUNCTIONALITY =====
+        function initImageSlider() {
+            const sliderTrack = document.querySelector('.slider-track');
+            const sliderDots = document.querySelector('.slider-dots');
+            const prevBtn = document.querySelector('.slider-prev');
+            const nextBtn = document.querySelector('.slider-next');
+            
+            if (!sliderTrack || !sliderDots) return;
+            
+            // Replace these with your actual image paths
+            const images = [
+                '1.jpg',
+                '2.jpg',
+                '4.jpg',
+                '5.jpg',
+                '6.jpg',
+                '7.jpg',
+                '8.jpg',
+                '9.jpg'
+
+            ];
+            
+            let currentSlide = 0;
+            let autoPlayInterval;
+            
+            // Clear existing content
+            sliderTrack.innerHTML = '';
+            sliderDots.innerHTML = '';
+            
+            // Create slides
+            images.forEach((imgSrc, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                
+                const slideInner = document.createElement('div');
+                slideInner.className = 'slide-inner';
+                
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = `Memory ${index + 1}`;
+                img.loading = 'lazy'; // Lazy loading for better performance
+                
+                img.onload = function() {
+                    // Determine if image is portrait or landscape
+                    if (this.naturalHeight > this.naturalWidth) {
+                        slide.classList.add('portrait');
+                    } else {
+                        slide.classList.add('landscape');
+                    }
+                };
+                
+                slideInner.appendChild(img);
+                slide.appendChild(slideInner);
+                sliderTrack.appendChild(slide);
+                
+                // Create dot indicator
+                const dot = document.createElement('div');
+                dot.className = 'slider-dot';
+                dot.dataset.index = index;
+                if (index === 0) dot.classList.add('active');
+                sliderDots.appendChild(dot);
+                
+                // Click dot to navigate
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+            });
+            
+            const slideElements = document.querySelectorAll('.slide');
+            
+            // Navigation functions
+            function goToSlide(index) {
+                currentSlide = index;
+                const translateX = -currentSlide * (100 / images.length);
+                sliderTrack.style.transform = `translateX(${translateX}%)`;
+                
+                // Update active dot
+                document.querySelectorAll('.slider-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
             }
-        };
-        
-        slideInner.appendChild(img);
-        slide.appendChild(slideInner);
-        sliderTrack.appendChild(slide);
-        slideElements.push(slide);
-        
-        // Create dot indicator
-        const dot = document.createElement('div');
-        dot.className = 'slider-dot';
-        dot.dataset.index = index;
-        if (index === 0) dot.classList.add('active');
-        sliderDots.appendChild(dot);
-        
-        // Click dot to navigate
-        dot.addEventListener('click', () => {
-            goToSlide(index);
-        });
-    });
-    
-    // Navigation functions
-    function goToSlide(index) {
-        // Remove active class from all slides
-        slideElements.forEach(slide => {
-            slide.classList.remove('active');
-        });
-        
-        currentSlide = index;
-        const translateX = -currentSlide * (100 / images.length);
-        sliderTrack.style.transform = `translateX(${translateX}%)`;
-        
-        // Add active class to current slide for animation
-        setTimeout(() => {
-            slideElements[currentSlide].classList.add('active');
-        }, 50);
-        
-        // Update active dot
-        document.querySelectorAll('.slider-dot').forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentSlide);
-        });
-    }
-    
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % images.length;
-        goToSlide(currentSlide);
-    }
-    
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + images.length) % images.length;
-        goToSlide(currentSlide);
-    }
-    
-    // Event listeners
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') nextSlide();
-        if (e.key === 'ArrowLeft') prevSlide();
-    });
-    
-    // Touch/swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    sliderTrack.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        clearInterval(autoPlayInterval); // Pause autoplay during interaction
-    }, { passive: true });
-    
-    sliderTrack.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-        startAutoPlay(); // Resume autoplay
-    }, { passive: true });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        
-        if (touchEndX < touchStartX - swipeThreshold) {
-            nextSlide();
+            
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % images.length;
+                goToSlide(currentSlide);
+            }
+            
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + images.length) % images.length;
+                goToSlide(currentSlide);
+            }
+            
+            // Event listeners
+            if (nextBtn) {
+                nextBtn.addEventListener('click', nextSlide);
+            }
+            
+            if (prevBtn) {
+                prevBtn.addEventListener('click', prevSlide);
+            }
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+            });
+            
+            // Touch/swipe support
+            let touchStartX = 0;
+            
+            sliderTrack.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                clearInterval(autoPlayInterval); // Pause autoplay during interaction
+            }, { passive: true });
+            
+            sliderTrack.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].screenX;
+                const swipeThreshold = 50;
+                
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    nextSlide();
+                }
+                
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    prevSlide();
+                }
+                
+                startAutoPlay(); // Resume autoplay
+            }, { passive: true });
+            
+            // Autoplay function
+            function startAutoPlay() {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = setInterval(() => {
+                    nextSlide();
+                }, 4000); // Change slide every 4 seconds
+            }
+            
+            // Pause autoplay when hovering over slider
+            sliderTrack.addEventListener('mouseenter', () => {
+                clearInterval(autoPlayInterval);
+            });
+            
+            sliderTrack.addEventListener('mouseleave', () => {
+                startAutoPlay();
+            });
+            
+            // Initialize autoplay and set first slide as active
+            startAutoPlay();
+            goToSlide(0);
         }
         
-        if (touchEndX > touchStartX + swipeThreshold) {
-            prevSlide();
-        }
-    }
-    
-    // Multiple animation effects
-    const animationEffects = ['slide', 'fade', 'zoom'];
-    let currentAnimation = 0;
-    
-    function changeAnimation() {
-        sliderTrack.classList.remove(animationEffects[currentAnimation] + '-transition');
-        
-        currentAnimation = (currentAnimation + 1) % animationEffects.length;
-        
-        sliderTrack.classList.add(animationEffects[currentAnimation] + '-transition');
-    }
-    
-    // Set initial animation
-    sliderTrack.classList.add('slide-transition');
-    
-    // Autoplay function
-    function startAutoPlay() {
-        clearInterval(autoPlayInterval);
-        autoPlayInterval = setInterval(() => {
-            nextSlide();
-            // Change animation effect every 3 slides
-            if (currentSlide % 3 === 0) {
-                changeAnimation();
-            }
-        }, 2000); // Change slide every 2 seconds
-    }
-    
-    // Pause autoplay when hovering over slider
-    sliderTrack.addEventListener('mouseenter', () => {
-        clearInterval(autoPlayInterval);
+        // Initialize the slider
+        initImageSlider();
     });
+
+    // Preload critical images for better performance
+    function preloadImages() {
+        const images = [
+            'img1.jpg',
+            'img2.jpg',
+            'img3.jpg',
+            'img4.jpg',
+            'img5.jpg'
+        ];
+        
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
     
-    sliderTrack.addEventListener('mouseleave', () => {
-        startAutoPlay();
-    });
-    
-    // Initialize autoplay and set first slide as active
-    startAutoPlay();
-    goToSlide(0);
-}
-
-// Initialize the slider when DOM is loaded
-document.addEventListener('DOMContentLoaded', initImageSlider);
-
-
-
-
-
+    // Start preloading once window loads
+    if (document.readyState === 'complete') {
+        preloadImages();
+    } else {
+        window.addEventListener('load', preloadImages);
+    }
+    </script>
 </script>
 </body>
 </html>
-
