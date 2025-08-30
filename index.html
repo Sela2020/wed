@@ -644,28 +644,69 @@
         }
         
         /* Background image fix */
-        .bg-fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background-image: url('img1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(249, 245, 243, 0.85);
-            z-index: -1;
-        }
+.bg-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-image: url('img1.jpg');
+    background-size: cover;
+    background-position: center;
+    /* Remove fixed attachment for mobile */
+    background-attachment: scroll;
+}
+
+/* Mobile-specific background fix */
+@media (max-width: 768px) {
+    .bg-fixed {
+        background-attachment: scroll;
+        /* Add a pseudo-element to ensure proper rendering */
+        position: absolute;
+        height: 100vh;
+        /* Add a slight blur to improve text readability */
+        filter: blur(2px);
+    }
+    
+    .bg-overlay {
+        position: absolute;
+        height: 100%;
+        /* Increase opacity for better readability on mobile */
+        background: rgba(249, 245, 243, 0.92);
+    }
+    
+    /* Ensure content sections have proper background on mobile */
+    section {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Additional fix for very small screens */
+@media (max-width: 480px) {
+    .bg-fixed {
+        /* Use a higher quality rendering */
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+.bg-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    overflow: hidden;
+}
+
+
+
+
+
+
 
 
 
@@ -1407,43 +1448,88 @@ From that day forward, our journey truly began, a journey filled with laughter, 
 <script>
             // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
+
+
+
+
         // ===== MUSIC PLAYER =====
-        const music = document.getElementById('weddingMusic');
-        const musicControl = document.getElementById('musicControl');
-        const musicIcon = document.getElementById('musicIcon');
-        let musicPlaying = false;
+const music = document.getElementById('weddingMusic');
+const musicControl = document.getElementById('musicControl');
+const musicIcon = document.getElementById('musicIcon');
+let musicPlaying = false;
+let musicStarted = false;
+
+// Set volume to 70%
+if (music) {
+    music.volume = 0.7;
+}
+
+// Toggle play/pause
+function toggleMusic() {
+    if (!music) return;
+    
+    if (musicPlaying) {
+        music.pause();
+        musicIcon.classList.remove('fa-volume-up');
+        musicIcon.classList.add('fa-volume-mute');
+    } else {
+        const playPromise = music.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+            }).catch(error => {
+                console.log('Play failed:', error);
+            });
+        }
+    }
+    musicPlaying = !musicPlaying;
+}
+
+// Click handler for music control
+if (musicControl) {
+    musicControl.addEventListener('click', toggleMusic);
+}
+
+// Start music on first user interaction
+function startMusicOnInteraction() {
+    if (!musicStarted && music) {
+        toggleMusic();
+        musicStarted = true;
         
-        // Set volume to 30%
-        if (music) {
-            music.volume = 0.3;
-        }
+        // Remove the event listeners after first interaction
+        document.removeEventListener('click', startMusicOnInteraction);
+        document.removeEventListener('touchstart', startMusicOnInteraction);
+    }
+}
 
-        // Toggle play/pause
-        function toggleMusic() {
-            if (!music) return;
-            
-            if (musicPlaying) {
-                music.pause();
-                musicIcon.classList.remove('fa-volume-up');
-                musicIcon.classList.add('fa-volume-mute');
+// Add event listeners for user interaction
+document.addEventListener('click', startMusicOnInteraction);
+document.addEventListener('touchstart', startMusicOnInteraction);
+
+// Stop music when user leaves the site
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && musicPlaying) {
+        toggleMusic();
+    }
+});
+
+// Stop music when page is about to be unloaded
+window.addEventListener('beforeunload', function() {
+    if (musicPlaying && music) {
+        // Fade out the music before leaving
+        const fadeAudio = setInterval(function() {
+            if (music.volume > 0.1) {
+                music.volume -= 0.1;
             } else {
-                const playPromise = music.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        musicIcon.classList.remove('fa-volume-mute');
-                        musicIcon.classList.add('fa-volume-up');
-                    }).catch(error => {
-                        console.log('Play failed:', error);
-                    });
-                }
+                music.pause();
+                clearInterval(fadeAudio);
             }
-            musicPlaying = !musicPlaying;
-        }
+        }, 100);
+    }
+});
 
-        // Click handler for music control
-        if (musicControl) {
-            musicControl.addEventListener('click', toggleMusic);
-        }
+
 
         // ===== SPLASH SCREEN ANIMATION =====
         const splashScreen = document.getElementById('splashScreen');
@@ -1904,6 +1990,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animate();
 });
+
+
+
+
+
+// Mobile background image optimization
+function optimizeMobileBackground() {
+    if (window.innerWidth <= 768) {
+        const bgFixed = document.querySelector('.bg-fixed');
+        if (bgFixed) {
+            // Force redraw for mobile browsers
+            bgFixed.style.display = 'none';
+            setTimeout(() => {
+                bgFixed.style.display = 'block';
+            }, 50);
+        }
+    }
+}
+
+// Run on load and resize
+window.addEventListener('load', optimizeMobileBackground);
+window.addEventListener('resize', optimizeMobileBackground);
     </script>
 </script>
 </body>
